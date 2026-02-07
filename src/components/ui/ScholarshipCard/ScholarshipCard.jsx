@@ -5,7 +5,6 @@ import { Link } from "react-router";
 const ScholarshipCard = ({ item }) => {
   return (
     <div className="group relative bg-base-100 border border-base-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
-
       {/* Image */}
       <div className="relative overflow-hidden">
         <img
@@ -25,7 +24,6 @@ const ScholarshipCard = ({ item }) => {
 
       {/* Body */}
       <div className="p-5 flex flex-col flex-grow">
-
         {/* Title */}
         <h2 className="text-lg font-bold text-base-content leading-snug line-clamp-2 min-h-[48px]">
           {item?.scholarshipName}
@@ -41,14 +39,13 @@ const ScholarshipCard = ({ item }) => {
           <div className="flex items-center gap-2">
             <FaGlobe className="text-secondary text-xs" />
             <span>
-              {item?.city}, {item?.country}
+              {item?.universityCity}, {item?.universityCountry}
             </span>
           </div>
         </div>
 
         {/* Info Grid */}
         <div className="grid grid-cols-2 gap-3 mt-4 text-sm">
-
           <div className="bg-base-200 rounded-lg p-2 text-center">
             <p className="text-xs opacity-70">Application Fee</p>
             <p className="font-semibold text-primary">
@@ -60,11 +57,8 @@ const ScholarshipCard = ({ item }) => {
             <p className="text-xs opacity-70 flex justify-center items-center gap-1">
               <FaClock className="text-error text-xs" /> Deadline
             </p>
-            <p className="font-semibold text-error text-xs">
-              {item?.deadline}
-            </p>
+            <p className="font-semibold text-error text-xs">{item?.applicationDeadline}</p>
           </div>
-
         </div>
 
         {/* Button */}
@@ -76,7 +70,6 @@ const ScholarshipCard = ({ item }) => {
             View Details →
           </Link>
         </div>
-
       </div>
     </div>
   );
