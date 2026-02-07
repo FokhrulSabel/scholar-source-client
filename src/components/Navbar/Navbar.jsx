@@ -1,7 +1,21 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
+import useAuth from "../../hooks/useAuth";
+import { toast, ToastContainer } from "react-toastify";
+import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
+  const { user, signOutUser } = useAuth();
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        toast.success("You signed out successfully!");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
   const links = (
     <>
       <li>
@@ -19,7 +33,7 @@ const Navbar = () => {
   );
   return (
     <div className="navbar bg-base-100 shadow-sm px-4 md:px-10 sticky top-0 z-50">
-      {/* <ToastContainer /> */}
+      <ToastContainer />
       <div className="navbar-start">
         {/* Mobile Dropdown */}
         <div className="dropdown">
@@ -50,9 +64,8 @@ const Navbar = () => {
 
         {/* Logo */}
         <div className="flex items-center justify-center gap-1.5">
-          {/* <FaUtensils className="text-2xl text-secondary" /> */}
           <Link to="/" className="normal-case text-2xl font-bold">
-            Scholar<span className="text-primary">Source</span>
+            Scholar<span className="text-primary">Stream</span>
           </Link>
         </div>
       </div>
@@ -64,12 +77,52 @@ const Navbar = () => {
 
       {/* User Section */}
       <div className="navbar-end flex items-center gap-3">
-        <Link className="btn" to="/login">
-          Login
-        </Link>
-        <Link className="btn" to="/register">
-          Register
-        </Link>
+        {user ? (
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="m-1">
+              <div
+                className="tooltip tooltip-bottom"
+                data-tip={user.displayName || "No User"}
+              >
+                {user.photoURL ? (
+                  <img
+                    src={user?.photoURL}
+                    alt={user?.displayName || "User"}
+                    className="w-10 h-10 rounded-full border cursor-pointer"
+                  />
+                ) : (
+                  <FaUserCircle className="text-3xl text-gray-600 cursor-pointer" />
+                )}
+              </div>
+            </div>
+
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-100 rounded-box z-10 w-52 p-2 shadow-sm"
+            >
+              <li>
+                <NavLink to="/my-favorites">My Profile</NavLink>
+              </li>
+              <li>
+                <button
+                  onClick={handleSignOut}
+                  className="btn btn-outline btn-primary btn-sm"
+                >
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <Link to="/login" className="btn btn-primary btn-sm">
+              Login
+            </Link>
+            <Link to="/register" className="btn btn-outline btn-sm">
+              Register
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
