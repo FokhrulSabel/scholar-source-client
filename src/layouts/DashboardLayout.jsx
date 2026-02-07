@@ -71,7 +71,7 @@ const DashboardLayout = () => {
                 <span className="is-drawer-close:hidden">Homepage</span>
               </Link>
             </li>
-            {/* My parcel link */}
+            {/* My Profile */}
             <li>
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -80,7 +80,7 @@ const DashboardLayout = () => {
 "
               >
                 <CgProfile />
-                <span className="is-drawer-close:hidden"> My Profile</span>
+                <span className="is-drawer-close:hidden">My Profile</span>
               </NavLink>
             </li>
 
