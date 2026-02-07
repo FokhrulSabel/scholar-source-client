@@ -4,12 +4,14 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { createUser, updateUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-//   const axiosSecure = useSecure();
+  const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
 
   const {
@@ -30,43 +32,57 @@ const Register = () => {
     return res.data.data.url;
   };
 
+  // Register the user
   const handleRegistration = async (data) => {
+    setLoading(true);
+
     try {
-      setLoading(true);
+      // 1️.Validate Image
+      if (!data?.photo?.[0]) {
+        throw new Error("Profile image is required");
+      }
 
-      // 1. Create Firebase User
-      await createUser(data.email, data.password);
-
-      // 2. Upload Image to ImgBB
+      // 2️.Upload Image First (avoid orphan firebase users)
       const imageURL = await uploadToImgBB(data.photo[0]);
 
-      // 3. Save User Info in Database
+      // 3️.Create Firebase User
+      const userCredential = await createUser(data.email, data.password);
+      const firebaseUser = userCredential.user;
+
+      // 4️.Update Firebase Profile
+      const profile = {
+        displayName: data.name,
+        photoURL: imageURL,
+      };
+      await updateUser(profile);
+
+      // 5️.Prepare Database User Info
       const userInfo = {
         displayName: data.name,
         email: data.email,
         photoURL: imageURL,
         role: "student",
+        uid: firebaseUser.uid,
+        createdAt: new Date(),
       };
 
-    //   const dbRes = await axiosSecure.post("/users", userInfo);
+      // 6️.Save to Database
+      const dbRes = await axiosSecure.post("/users", userInfo);
 
-      // 4. Update Firebase Profile
-      const profile = {
-        displayName: data.name,
-        photoURL: imageURL,
-      };
-
-      await updateUser(profile);
-
-      console.log("Registration Success:", dbRes.data);
-
-      navigate(location.state || "/");
+      if (dbRes?.data?.insertedId || dbRes?.status === 200) {
+        toast.success("🎉 Registration successful!");
+        navigate(location?.state?.from || "/");
+      } else {
+        throw new Error("Database save failed");
+      }
     } catch (error) {
       console.error("Registration Failed:", error);
+      toast.error(error.message || "Registration failed. Try again.");
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -87,17 +103,6 @@ const Register = () => {
               />
               {errors.name && <p className="text-red-500">Name is required</p>}
 
-              {/* Photo */}
-              <label className="label">Image</label>
-              <input
-                type="file"
-                {...register("photo", { required: true })}
-                className="file-input"
-              />
-              {errors.photo && (
-                <p className="text-red-500">Photo is required</p>
-              )}
-
               {/* Email */}
               <label className="label">Email</label>
               <input
@@ -108,6 +113,17 @@ const Register = () => {
               />
               {errors.email && (
                 <p className="text-red-500">Email is required</p>
+              )}
+
+              {/* Photo */}
+              <label className="label">Image</label>
+              <input
+                type="file"
+                {...register("photo", { required: true })}
+                className="file-input"
+              />
+              {errors.photo && (
+                <p className="text-red-500">Photo is required</p>
               )}
 
               {/* Password */}
