@@ -7,6 +7,8 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
+import AddScholarship from "../pages/Dashboard/AddScholarship/AddScholarship";
+import AllScholarships from "../pages/Scholarships/AllScholarships/AllScholarships";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,11 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/all-scholarships",
+        Component: AllScholarships,
+        loader: () => fetch("/scholarship.json").then((res) => res.json()),
       },
     ],
   },
@@ -44,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "my-profile",
         Component: MyProfile,
+      },
+      {
+        path: "add-scholarship",
+        Component: AddScholarship,
       },
     ],
   },
