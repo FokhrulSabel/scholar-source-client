@@ -22,7 +22,6 @@ const router = createBrowserRouter([
       {
         path: "/all-scholarships",
         Component: AllScholarships,
-        loader: () => fetch("/scholarship.json").then((res) => res.json()),
       },
     ],
   },
