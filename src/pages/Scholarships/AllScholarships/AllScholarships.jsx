@@ -1,91 +1,173 @@
 import React, { useEffect, useState } from "react";
 import ScholarshipCard from "../../../components/ui/ScholarshipCard/ScholarshipCard";
 import useAxios from "../../../hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../../../components/Loader/Loader";
 
 const AllScholarships = () => {
   const axiosInstance = useAxios();
-  const [scholarships, setScholarships] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [country, setCountry] = useState("");
+  const [subject, setSubject] = useState("");
+  const [degree, setDegree] = useState("");
+  const [page, setPage] = useState(1);
+  const limit = 6;
+  // console.log(filter);
 
   useEffect(() => {
-    const fetchScholarships = async () => {
-      try {
-        setLoading(true);
-        const res = await axiosInstance.get("/scholarships", {
-          params: { limit: 6, page: 1 },
-        });
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 400);
 
-        setScholarships(res.data.scholarships || []);
-      } catch (error) {
-        console.error("Fetch Scholarships Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    return () => clearTimeout(timer);
+  }, [search]);
 
-    fetchScholarships();
-  }, [axiosInstance]);
+  const { data, isLoading, isFetching, error } = useQuery({
+    queryKey: [
+      "scholarships",
+      debouncedSearch,
+      country,
+      subject,
+      degree,
+      limit,
+      page,
+    ],
+    queryFn: async () => {
+      const params = new URLSearchParams({
+        search: debouncedSearch,
+        country,
+        subject,
+        degree,
+        limit,
+        page,
+      });
+      const res = await axiosInstance.get(`/all-scholarships?${params.toString()}`);
+      return res.data;
+    },
+    keepPreviousData: true,
+  });
+  const scholarships = data?.scholarships || [];
+  const totalPages = data?.totalPages || 1;
+
+  // input handler
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  // input handler
+  const handleFilter = (e) => {
+    setSubject(e.target.value);
+    // refetch();
+  };
+
+  if (error) return <h2>Error</h2>;
 
   return (
     <div className="px-4 py-10">
       {/* Top Filter Bar */}
       <div className="bg-white p-4 my-5 rounded-2xl shadow-md border border-gray-200 flex flex-wrap items-center gap-4">
+        {/* Left Filter Label */}
         <button className="flex items-center gap-2 bg-neutral text-white px-5 py-3 rounded-xl font-semibold shadow-sm">
           <span className="text-lg">⚙️</span> Filter Scholarships
         </button>
 
+        {/* Search bar */}
         <div className="h-7 w-px bg-gray-300 hidden md:block"></div>
 
         <input
+          onChange={handleSearch}
           type="text"
           placeholder="Search scholarships..."
           className="input input-bordered rounded-xl w-60 shadow-sm"
         />
 
+        {/* Subject Filter */}
         <div className="h-7 w-px bg-gray-300 hidden md:block"></div>
 
-        <select className="select select-bordered rounded-xl w-40 shadow-sm">
+        <select
+          onChange={handleFilter}
+          className="select select-bordered rounded-xl w-40 shadow-sm"
+        >
           <option disabled selected>
             Subject Category
           </option>
-          <option>Engineering</option>
-          <option>Business</option>
-          <option>Computer Science</option>
-          <option>Medical</option>
-          <option>Arts</option>
+          <option value="STEM">STEM</option>
+          <option value="General">General</option>
+          <option value="Engineering">Engineering</option>
+          <option value="Arts">Arts</option>
+          <option value="Business">Business</option>
+          <option value="Leadership">Leadership</option>
+          <option value="Medical">Medical</option>
         </select>
 
+        {/* Scholarship Category */}
         <div className="h-7 w-px bg-gray-300 hidden md:block"></div>
 
-        <select className="select select-bordered rounded-xl w-40 shadow-sm">
+        <select
+          onClick={(e) => setDegree(e.target.value)}
+          className="select select-bordered rounded-xl w-40 shadow-sm"
+        >
           <option disabled selected>
-            Scholarship Type
+            Degree
           </option>
-          <option>Fully Funded</option>
-          <option>Partially Funded</option>
-          <option>Tuition Waiver</option>
-          <option>Fellowship</option>
+          <option value="Undergraduate">Undergraduate</option>
+          <option value="Graduate">Graduate</option>
         </select>
-
+        {/* Location Filter */}
         <div className="h-7 w-px bg-gray-300 hidden md:block"></div>
 
-        <select className="select select-bordered rounded-xl w-40 shadow-sm">
+        <select
+          onChange={(e) => setCountry(e.target.value)}
+          className="select select-bordered rounded-xl w-40 shadow-sm"
+        >
           <option disabled selected>
             Country
           </option>
-          <option>USA</option>
-          <option>UK</option>
-          <option>Canada</option>
-          <option>Germany</option>
-          <option>Australia</option>
+          <option value="USA">USA</option>
+          <option value="UK">UK</option>
+          <option value="Singapore">Singapore</option>
+          <option value="Canada">Canada</option>
+          <option value="Japan">Japan</option>
         </select>
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-8">
-        {scholarships.map((item, index) => (
-          <ScholarshipCard key={index} item={item} />
+      {isLoading || isFetching ? (
+        <Loader></Loader>
+      ) : scholarships.length === 0 ? (
+        <div className="flex flex-col justify-center items-center h-[60vh] text-center">
+          <h2 className="text-4xl font-bold text-gray-600 mb-3">
+            No ScholarShips Found
+          </h2>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {scholarships.map((item, index) => (
+            <ScholarshipCard key={index} item={item}></ScholarshipCard>
+          ))}
+        </div>
+      )}
+      <div className="flex gap-2 mt-6 justify-center">
+        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+          Prev
+        </button>
+
+        {[...Array(totalPages).keys()].map((num) => (
+          <button
+            key={num}
+            onClick={() => setPage(num + 1)}
+            className={page === num + 1 ? "bg-blue-500 text-white" : ""}
+          >
+            {num + 1}
+          </button>
         ))}
+
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage(page + 1)}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

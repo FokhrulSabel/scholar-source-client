@@ -9,6 +9,8 @@ import PrivateRoute from "./PrivateRoute";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import AddScholarship from "../pages/Dashboard/AddScholarship/AddScholarship";
 import AllScholarships from "../pages/Scholarships/AllScholarships/AllScholarships";
+import ManageScholarships from "../pages/Dashboard/ManageScholarships/ManageScholarships";
+import EditScholarship from "../pages/Dashboard/EditScholarship/EditScholarship";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +56,14 @@ const router = createBrowserRouter([
       {
         path: "add-scholarship",
         Component: AddScholarship,
+      },
+      {
+        path: "manage-scholarship",
+        Component: ManageScholarships,
+      },
+      {
+        path: "edit-scholarship/:id",
+        Component: EditScholarship,
       },
     ],
   },
