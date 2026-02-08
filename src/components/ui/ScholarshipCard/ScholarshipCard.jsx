@@ -8,7 +8,7 @@ const ScholarshipCard = ({ item }) => {
       {/* Image */}
       <div className="relative overflow-hidden">
         <img
-          src={item?.image || "/placeholder.jpg"}
+          src={item?.universityImage || "/placeholder.jpg"}
           alt={item?.scholarshipName}
           className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
@@ -57,7 +57,9 @@ const ScholarshipCard = ({ item }) => {
             <p className="text-xs opacity-70 flex justify-center items-center gap-1">
               <FaClock className="text-error text-xs" /> Deadline
             </p>
-            <p className="font-semibold text-error text-xs">{item?.applicationDeadline}</p>
+            <p className="font-semibold text-error text-xs">
+              {item?.applicationDeadline}
+            </p>
           </div>
         </div>
 

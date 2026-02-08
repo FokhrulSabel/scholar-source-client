@@ -4,8 +4,11 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Loader from "../../../components/Loader/Loader";
+import { Link } from "lucide-react";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
-const ManageScholarships = (id) => {
+const ManageScholarships = () => {
   const axiosInstance = useAxios();
   const axiosSecure = useAxiosSecure();
   const {
@@ -17,14 +20,14 @@ const ManageScholarships = (id) => {
     queryKey: ["Scholarship"],
     queryFn: async () => {
       //   const email = user.email;
-      const res = await axiosInstance.get(`/scholarships/${id}`);
-      return res.data;
+      const res = await axiosInstance.get(`/scholarships`);
+      return res.data.result;
     },
   });
 
   // Delete scholarship
   const handleDelete = (id) => {
-    // console.log(id);
+    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -70,13 +73,16 @@ const ManageScholarships = (id) => {
         </thead>
         <tbody>
           {scholarships.map((scholarship, index) => (
-            <tr key={scholarship.id}>
+            <tr key={scholarship._id}>
               <th>{index + 1}</th>
               <td>
                 <div className="flex items-center gap-3">
                   <div className="avatar">
                     <div className="mask mask-squircle h-12 w-12">
-                      <img src={scholarship.image} alt="University image" />
+                      <img
+                        src={scholarship.universityImage}
+                        alt="University image"
+                      />
                     </div>
                   </div>
                   <div>
@@ -84,7 +90,8 @@ const ManageScholarships = (id) => {
                       {scholarship.universityName}
                     </div>
                     <div className="text-sm opacity-50">
-                      {scholarship.country}, {scholarship.city}
+                      {scholarship.universityCountry},{" "}
+                      {scholarship.universityCity}
                     </div>
                   </div>
                 </div>
@@ -105,17 +112,17 @@ const ManageScholarships = (id) => {
                 application Fees: {scholarship.applicationFees},<br></br>
                 service Charge: {scholarship.serviceCharge}
               </td>
-              <td>Deadline: {scholarship.deadline}</td>
+              <td>Deadline: {scholarship.applicationDeadline}</td>
 
               <th className="flex gap-2">
                 <Link
-                  to={`/dashboard/edit-scholarship/${scholarship.id}`}
+                  to={`/dashboard/edit-scholarship/${scholarship._id}`}
                   className="btn btn-sm btn-outline btn-info"
                 >
                   <FaEdit />
                 </Link>
                 <button
-                  onClick={() => handleDelete(scholarship.id)}
+                  onClick={() => handleDelete(scholarship._id)}
                   className="btn btn-sm btn-outline btn-error"
                 >
                   <MdDeleteForever size={20} />
