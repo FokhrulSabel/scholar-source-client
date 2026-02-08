@@ -4,6 +4,7 @@ import { CgProfile } from "react-icons/cg";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { FaHistory, FaUser } from "react-icons/fa";
 import { LuBike } from "react-icons/lu";
+import { MdOutlinePostAdd } from "react-icons/md";
 
 const DashboardLayout = () => {
   return (
@@ -81,6 +82,20 @@ const DashboardLayout = () => {
               >
                 <CgProfile />
                 <span className="is-drawer-close:hidden">My Profile</span>
+              </NavLink>
+            </li>
+
+            {/* AddScholarShip */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Add Scholarship"
+                to="/dashboard/add-scholarship
+"
+              >
+                <MdOutlinePostAdd />
+
+                <span className="is-drawer-close:hidden">Add ScholarShip</span>
               </NavLink>
             </li>
 
