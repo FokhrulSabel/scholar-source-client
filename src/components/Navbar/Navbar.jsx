@@ -29,6 +29,7 @@ const Navbar = () => {
           Scholarships
         </NavLink>
       </li>
+      
     </>
   );
   return (

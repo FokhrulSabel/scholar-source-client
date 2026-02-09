@@ -4,9 +4,9 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Loader from "../../../components/Loader/Loader";
-import { Link } from "lucide-react";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import { Link } from "react-router";
 
 const ManageScholarships = () => {
   const axiosInstance = useAxios();

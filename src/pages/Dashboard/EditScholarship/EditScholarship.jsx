@@ -30,17 +30,17 @@ const EditScholarship = () => {
   const {
     scholarshipName,
     universityName,
-    image,
-    country,
-    city,
-    worldRank,
+    universityImage,
+    universityCountry,
+    universityCity,
+    universityWorldRank,
     subjectCategory,
     scholarshipCategory,
     degree,
     tuitionFees,
     applicationFees,
     serviceCharge,
-    deadline,
+    applicationDeadline,
   } = scholarship;
 
   const handleEditScholarship = async (data) => {
@@ -111,7 +111,7 @@ const EditScholarship = () => {
                 </label>
                 <input
                   type="url"
-                  defaultValue={image}
+                  defaultValue={universityImage}
                   className="input input-bordered w-full shadow-sm"
                   {...register("image")}
                 />
@@ -131,7 +131,7 @@ const EditScholarship = () => {
                 </label>
                 <input
                   type="text"
-                  defaultValue={country}
+                  defaultValue={universityCountry}
                   className="input input-bordered w-full shadow-sm"
                   {...register("country")}
                 />
@@ -146,7 +146,7 @@ const EditScholarship = () => {
                 </label>
                 <input
                   type="text"
-                  defaultValue={city}
+                  defaultValue={universityCity}
                   className="input input-bordered w-full shadow-sm"
                   {...register("city")}
                 />
@@ -162,7 +162,7 @@ const EditScholarship = () => {
                 <input
                   type="number"
                   min="1"
-                  defaultValue={worldRank}
+                  defaultValue={universityWorldRank}
                   className="input input-bordered w-full shadow-sm"
                   {...register("worldRank")}
                 />
@@ -301,7 +301,7 @@ const EditScholarship = () => {
                 </label>
                 <input
                   type="date"
-                  defaultValue={deadline}
+                  defaultValue={applicationDeadline}
                   className="input input-bordered w-full shadow-sm"
                   {...register("deadline")}
                 />
