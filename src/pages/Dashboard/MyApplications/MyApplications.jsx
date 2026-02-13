@@ -42,7 +42,7 @@ const MyApplications = () => {
         amount: application.amount,
         studentEmail: application.userEmail,
       });
-      window.location.href = res.data.url;
+      window.location.href = res?.data?.url;
     } catch (error) {
       console.log(error);
     }
@@ -76,11 +76,12 @@ const MyApplications = () => {
   };
   // Handle create review
 
-  const handleReview = async (appliInfo) => {
+  const handleReview = async (applicationInfo) => {
     try {
       const payload = {
-        scholarshipId: appliInfo.scholarshipId,
-        universityName: appliInfo.universityName,
+        scholarshipId: applicationInfo.scholarshipId,
+        scholarshipName: applicationInfo.scholarshipName,
+        universityName: applicationInfo.universityName,
         userName: user.displayName,
         userEmail: user.email,
         userImage: user.photoURL,
