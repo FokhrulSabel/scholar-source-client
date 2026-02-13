@@ -15,7 +15,7 @@ const PaymentFailed = () => {
     universityName: "",
     amount: 0,
   });
-    console.log(scholarshipData);
+  console.log(scholarshipData);
 
   useEffect(() => {
     if (!user?.email) return;
@@ -26,7 +26,7 @@ const PaymentFailed = () => {
     const amount = localStorage.getItem("amount");
     console.log(amount);
 
-    if (!scholarshipId) return;
+    if ((!scholarshipId, scholarshipName)) return;
 
     // Send to backend
     axiosSecure
@@ -55,7 +55,10 @@ const PaymentFailed = () => {
         University: {scholarshipData.universityName}
       </p>
 
-      <Link to="/dashboard" className="btn btn-primary w-full mt-6">
+      <Link
+        to="/dashboard/my-applications"
+        className="btn btn-primary w-full mt-6"
+      >
         Return to Dashboard
       </Link>
     </div>

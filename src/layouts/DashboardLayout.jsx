@@ -1,11 +1,10 @@
 import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { CgProfile } from "react-icons/cg";
-import { CiDeliveryTruck } from "react-icons/ci";
 import { FaHistory, FaSlidersH, FaUser } from "react-icons/fa";
-import { LuBike } from "react-icons/lu";
 import { MdEditDocument, MdOutlinePostAdd } from "react-icons/md";
 import { IoMdHome, IoMdSettings } from "react-icons/io";
+import { FileUser } from "lucide-react";
 
 const DashboardLayout = () => {
   return (
@@ -71,7 +70,7 @@ const DashboardLayout = () => {
                 to="/dashboard/add-scholarship
 "
               >
-                <MdOutlinePostAdd size={22} />
+                <MdOutlinePostAdd size={24} />
 
                 <span className="is-drawer-close:hidden">Add ScholarShip</span>
               </NavLink>
@@ -92,16 +91,31 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
 
-            {/* Users Managment  */}
+            {/* Users Management  */}
             <li>
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Users Managment "
-                to="/dashboard/users-managment 
+                data-tip="Users Management "
+                to="/dashboard/users-management 
 "
               >
                 <FaUser size={22} />
-                <span className="is-drawer-close:hidden">Users Managment </span>
+                <span className="is-drawer-close:hidden">
+                  Users Management{" "}
+                </span>
+              </NavLink>
+            </li>
+
+            {/* My Applications */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Applications"
+                to="/dashboard/my-applications 
+"
+              >
+                <FileUser size={24} />
+                <span className="is-drawer-close:hidden">My Applications</span>
               </NavLink>
             </li>
 
