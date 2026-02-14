@@ -92,12 +92,12 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
 
-            {/* Users Management  */}
+            {/* Manage Users */}
             <li>
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Users Management "
-                to="/dashboard/users-management 
+                data-tip="Manage Users"
+                to="/dashboard/manage-users 
 "
               >
                 <FaUser size={22} />
