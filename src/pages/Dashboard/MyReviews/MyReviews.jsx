@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
 
 const MyReviews = () => {
@@ -10,6 +10,7 @@ const MyReviews = () => {
   const axiosSecure = useAxiosSecure();
 
   const [selectedReview, setSelectedReview] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const {
     data: reviews = [],
@@ -18,12 +19,13 @@ const MyReviews = () => {
   } = useQuery({
     queryKey: ["my-reviews", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/my-reviews`);
+      const res = await axiosSecure.get(`/my-reviews?userEmail=${user.email}`);
       return res.data.reviews || [];
     },
   });
 
-  if (isLoading) return <Loader></Loader>;
+  if (isLoading) return <Loader />;
+
   // Delete the review
   const handleDelete = async (id) => {
     const confirm = window.confirm("Are you sure you want to delete?");
@@ -44,7 +46,7 @@ const MyReviews = () => {
 
     if (res.data.success) {
       toast.success("Review updated!");
-      setSelectedReview(null);
+      setShowEditModal(false);
       refetch();
     }
   };
@@ -52,6 +54,7 @@ const MyReviews = () => {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-5">My Reviews</h2>
+      <ToastContainer />
 
       {/* TABLE */}
       <div className="overflow-x-auto">
@@ -81,7 +84,10 @@ const MyReviews = () => {
                 <td className="space-x-2">
                   <button
                     className="btn btn-sm btn-info"
-                    onClick={() => setSelectedReview(review)}
+                    onClick={() => {
+                      setShowEditModal(true);
+                      setSelectedReview(review);
+                    }}
                   >
                     Edit
                   </button>
@@ -100,11 +106,18 @@ const MyReviews = () => {
       </div>
 
       {/* EDIT MODAL */}
-      {selectedReview && (
+      {showEditModal && (
         <dialog open className="modal">
-          <div className="modal-box">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleUpdateReview();
+            }}
+            className="modal-box"
+          >
             <h3 className="font-bold text-lg mb-3">Edit Review</h3>
 
+            {/* Rating */}
             <input
               type="number"
               min="1"
@@ -114,32 +127,37 @@ const MyReviews = () => {
               onChange={(e) =>
                 setSelectedReview({
                   ...selectedReview,
-                  rating: e.target.value,
+                  rating: Number(e.target.value),
                 })
               }
             />
 
+            {/* Comment */}
             <textarea
               className="textarea textarea-bordered w-full mb-3"
               value={selectedReview.comment}
               onChange={(e) =>
                 setSelectedReview({
                   ...selectedReview,
-                  reviewComment: e.target.value,
+                  comment: e.target.value,
                 })
               }
             ></textarea>
 
             <div className="flex justify-end gap-3">
-              <button className="btn" onClick={() => setSelectedReview(null)}>
+              <button
+                type="button"
+                className="btn"
+                onClick={() => setShowEditModal(false)}
+              >
                 Cancel
               </button>
 
-              <button className="btn btn-primary" onClick={handleUpdateReview}>
+              <button type="submit" className="btn btn-primary">
                 Update
               </button>
             </div>
-          </div>
+          </form>
         </dialog>
       )}
     </div>
