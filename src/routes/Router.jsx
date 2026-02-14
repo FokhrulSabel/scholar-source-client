@@ -19,11 +19,13 @@ import MyApplications from "../pages/Dashboard/MyApplications/MyApplications";
 import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
 import ManageApplications from "../pages/Dashboard/ManageApplications/ManageApplications";
 import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
+import ErrorPage from "../components/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",

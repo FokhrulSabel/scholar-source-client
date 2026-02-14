@@ -2,6 +2,7 @@ import React from "react";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import Loader from "../components/Loader/Loader";
+import Forbidden from "../components/Forbidden/Forbidden";
 
 const ModeratorRoute = ({ children }) => {
   const { loading } = useAuth();
@@ -12,7 +13,7 @@ const ModeratorRoute = ({ children }) => {
   }
 
   if (role !== "moderator") {
-    return;
+    return <Forbidden></Forbidden>;
   }
   return children;
 };
