@@ -17,6 +17,7 @@ import PaymentSuccess from "../pages/Payments/PaymentSuccess";
 import PaymentFailed from "../pages/Payments/PaymentFailed";
 import MyApplications from "../pages/Dashboard/MyApplications/MyApplications";
 import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
+import ManageApplications from "../pages/Dashboard/ManageApplications/ManageApplications";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
       {
         path: "my-reviews",
         Component: MyReviews,
+      },
+      {
+        path: "manage-applications",
+        Component: ManageApplications,
       },
     ],
   },

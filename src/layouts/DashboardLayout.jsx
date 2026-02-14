@@ -4,7 +4,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaHistory, FaSlidersH, FaUser } from "react-icons/fa";
 import { MdEditDocument, MdOutlinePostAdd } from "react-icons/md";
 import { IoMdHome, IoMdSettings } from "react-icons/io";
-import { RiMessageLine } from "react-icons/ri";
+import { RiChatSettingsFill, RiMessageLine } from "react-icons/ri";
 import { FileUser } from "lucide-react";
 
 const DashboardLayout = () => {
@@ -129,6 +129,21 @@ const DashboardLayout = () => {
               >
                 <RiMessageLine size={24} />
                 <span className="is-drawer-close:hidden">My Reviews</span>
+              </NavLink>
+            </li>
+
+            {/* Manage Application */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Manage Application"
+                to="/dashboard/manage-applications 
+"
+              >
+                <RiChatSettingsFill size={24} />
+                <span className="is-drawer-close:hidden">
+                  Manage Application{" "}
+                </span>
               </NavLink>
             </li>
 
