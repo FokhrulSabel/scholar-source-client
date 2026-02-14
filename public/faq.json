@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "category": "General",
+    "priority": "high",
+    "isPublic": true,
+    "question": "What is the main purpose of this scholarship platform?",
+    "answer": "The platform provides a centralized environment where students can explore verified scholarships, compare opportunities, and manage applications efficiently from a single dashboard.",
+    "createdAt": "2026-02-01"
+  },
+  {
+    "id": 2,
+    "category": "Account",
+    "priority": "high",
+    "isPublic": true,
+    "question": "Do I need an account to apply for scholarships?",
+    "answer": "Yes, students must create and verify an account to apply, track applications, manage payments, and receive real-time updates.",
+    "createdAt": "2026-02-01"
+  },
+  {
+    "id": 3,
+    "category": "Eligibility",
+    "priority": "high",
+    "isPublic": true,
+    "question": "How do I know if I am eligible for a scholarship?",
+    "answer": "Each scholarship listing includes eligibility criteria such as academic qualifications, degree level, subject area, and country requirements.",
+    "createdAt": "2026-02-02"
+  },
+  {
+    "id": 4,
+    "category": "Application",
+    "priority": "high",
+    "isPublic": true,
+    "question": "What documents are typically required for applications?",
+    "answer": "Common requirements include academic transcripts, identification documents, personal statements, and sometimes recommendation letters depending on the scholarship.",
+    "createdAt": "2026-02-02"
+  },
+  {
+    "id": 5,
+    "category": "Application",
+    "priority": "medium",
+    "isPublic": true,
+    "question": "Can I apply to multiple scholarships simultaneously?",
+    "answer": "Yes, students can apply to multiple scholarships provided they meet the eligibility requirements for each opportunity.",
+    "createdAt": "2026-02-03"
+  },
+  {
+    "id": 6,
+    "category": "Payment",
+    "priority": "high",
+    "isPublic": true,
+    "question": "Why do some scholarship applications include a service fee?",
+    "answer": "Service fees support application processing, technical infrastructure, document verification, and administrative management.",
+    "createdAt": "2026-02-03"
+  },
+  {
+    "id": 7,
+    "category": "Payment",
+    "priority": "high",
+    "isPublic": true,
+    "question": "What payment methods are supported?",
+    "answer": "The platform supports secure online payment gateways including debit cards, credit cards, and other supported digital payment options.",
+    "createdAt": "2026-02-04"
+  },
+  {
+    "id": 8,
+    "category": "Payment",
+    "priority": "medium",
+    "isPublic": true,
+    "question": "Will I receive a receipt after payment?",
+    "answer": "Yes, a digital receipt is automatically generated and available in your dashboard after successful payment confirmation.",
+    "createdAt": "2026-02-04"
+  },
+  {
+    "id": 9,
+    "category": "Security",
+    "priority": "high",
+    "isPublic": true,
+    "question": "Is my personal and payment information secure?",
+    "answer": "Yes, the platform uses industry-standard encryption, secure authentication, and trusted payment gateways to protect all user data.",
+    "createdAt": "2026-02-05"
+  },
+  {
+    "id": 10,
+    "category": "Application",
+    "priority": "medium",
+    "isPublic": true,
+    "question": "Can I edit my application after submission?",
+    "answer": "Applications cannot usually be modified after submission to ensure fairness and data integrity during the review process.",
+    "createdAt": "2026-02-05"
+  }
+]

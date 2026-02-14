@@ -4,6 +4,7 @@ import TopScholarships from "../../components/HomeContainer/TopScholarships/TopS
 import SuccessStories from "../../components/HomeContainer/SuccessStories/SuccessStories";
 import Statistics from "../../components/HomeContainer/Statistics/Statistics";
 import HowItWorks from "../../components/HomeContainer/HowItWorks/HowItWorks";
+import FAQ from "../../components/HomeContainer/FAQ/FAQ";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <SuccessStories></SuccessStories>
       <Statistics></Statistics>
       <HowItWorks></HowItWorks>
+      <FAQ></FAQ>
     </div>
   );
 };
