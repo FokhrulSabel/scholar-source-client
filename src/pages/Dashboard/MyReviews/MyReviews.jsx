@@ -4,6 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast, ToastContainer } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
+import Swal from "sweetalert2";
 
 const MyReviews = () => {
   const { user } = useAuth();
@@ -28,13 +29,29 @@ const MyReviews = () => {
 
   // Delete the review
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Are you sure you want to delete?");
-    if (!confirm) return;
-
-    const res = await axiosSecure.delete(`/my-reviews/${id}`);
-    if (res.data.success) {
-      toast.success("Review deleted!");
-      refetch();
+    const Conferm = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (Conferm.isConfirmed) {
+      try {
+        const res = await axiosSecure.delete(`/my-reviews/${id}`);
+        if (res.data.success) {
+          refetch();
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your review has been deleted.",
+            icon: "success",
+          });
+        }
+      } catch (error) {
+        Swal.fire("Error!", error.message, "error");
+      }
     }
   };
   //Update the review
