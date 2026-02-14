@@ -6,8 +6,11 @@ import { MdEditDocument, MdOutlinePostAdd } from "react-icons/md";
 import { IoMdHome, IoMdSettings } from "react-icons/io";
 import { RiChatSettingsFill, RiMessageLine } from "react-icons/ri";
 import { FileUser } from "lucide-react";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
+  const { role } = useRole();
+  console.log(role);
   return (
     <div className="drawer lg:drawer-open max-w-screen-2xl mx-auto bg-[#eaeced]">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -55,8 +58,7 @@ const DashboardLayout = () => {
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="My Profile"
-                to="/dashboard/my-profile
-"
+                to="/dashboard/my-profile"
               >
                 <CgProfile size={22} />
                 <span className="is-drawer-close:hidden">My Profile</span>
@@ -68,8 +70,7 @@ const DashboardLayout = () => {
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Add Scholarship"
-                to="/dashboard/add-scholarship
-"
+                to="/dashboard/add-scholarship"
               >
                 <MdOutlinePostAdd size={24} />
 
@@ -82,8 +83,7 @@ const DashboardLayout = () => {
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Manage Scholarship"
-                to="/dashboard/manage-scholarship
-"
+                to="/dashboard/manage-scholarship"
               >
                 <MdEditDocument size={22} />
                 <span className="is-drawer-close:hidden">
@@ -97,8 +97,7 @@ const DashboardLayout = () => {
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Manage Users"
-                to="/dashboard/manage-users 
-"
+                to="/dashboard/manage-users"
               >
                 <FaUser size={22} />
                 <span className="is-drawer-close:hidden">
@@ -112,8 +111,7 @@ const DashboardLayout = () => {
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="My Applications"
-                to="/dashboard/my-applications 
-"
+                to="/dashboard/my-applications"
               >
                 <FileUser size={24} />
                 <span className="is-drawer-close:hidden">My Applications</span>
@@ -124,8 +122,7 @@ const DashboardLayout = () => {
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="My Reviews"
-                to="/dashboard/my-reviews 
-"
+                to="/dashboard/my-reviews"
               >
                 <RiMessageLine size={24} />
                 <span className="is-drawer-close:hidden">My Reviews</span>
@@ -137,8 +134,7 @@ const DashboardLayout = () => {
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Manage Application"
-                to="/dashboard/manage-applications 
-"
+                to="/dashboard/manage-applications"
               >
                 <RiChatSettingsFill size={24} />
                 <span className="is-drawer-close:hidden">

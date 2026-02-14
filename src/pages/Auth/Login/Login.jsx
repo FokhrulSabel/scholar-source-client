@@ -19,8 +19,8 @@ const Login = () => {
         console.log(res.user);
         navigate(location.state || "/");
       })
-      .catch((errror) => {
-        console.log(errror);
+      .catch((error) => {
+        console.log(error);
       });
   };
 
