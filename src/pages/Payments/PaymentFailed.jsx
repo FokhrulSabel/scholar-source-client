@@ -1,66 +1,95 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Loader from "../../components/Loader/Loader";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import { XCircle } from "lucide-react";
 
 const PaymentFailed = () => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  const location = useLocation();
+  const hasRecorded = useRef(false);
 
-  //State to store scholarship info
-  const [scholarshipData, setScholarshipData] = useState({
-    scholarshipId: "",
-    scholarshipName: "",
-    universityName: "",
-    amount: 0,
+  // Get values directly (no state needed)
+  const scholarshipId = localStorage.getItem("scholarshipId");
+  const scholarshipName = localStorage.getItem("scholarshipName");
+  const universityName = localStorage.getItem("universityName");
+  const amount = localStorage.getItem("amount");
+
+  const params = new URLSearchParams(location.search);
+  const errorMessage =
+    params.get("error") ||
+    "Your payment could not be completed. Please try again.";
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data) => {
+      const res = await axiosSecure.post("/payment-failed-record", data);
+      return res.data;
+    },
   });
-  console.log(scholarshipData);
 
   useEffect(() => {
-    if (!user?.email) return;
+    if (
+      !user?.email ||
+      !scholarshipId ||
+      !scholarshipName ||
+      hasRecorded.current
+    )
+      return;
 
-    const scholarshipId = localStorage.getItem("scholarshipId");
-    const scholarshipName = localStorage.getItem("scholarshipName");
-    const universityName = localStorage.getItem("universityName");
-    const amount = localStorage.getItem("amount");
-    console.log(amount);
+    hasRecorded.current = true;
 
-    if ((!scholarshipId, scholarshipName)) return;
+    mutate({
+      scholarshipId,
+      scholarshipName,
+      universityName,
+      amount,
+      userEmail: user.email,
+      userName: user.displayName,
+    });
+  }, [user, scholarshipId, scholarshipName, universityName, amount, mutate]);
 
-    // Send to backend
-    axiosSecure
-      .post("/payment-failed-record", {
-        scholarshipId,
-        scholarshipName,
-        universityName,
-        amount,
-        userEmail: user.email,
-      })
-      .then((res) => {
-        console.log(res.data.result);
-        setScholarshipData(res.data.result);
-      });
-  }, [user, axiosSecure]);
+  if (loading || isPending) return <Loader />;
 
-  if (!user?.email) return <Loader></Loader>;
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-xl my-16 text-center">
-      <h2 className="text-2xl font-bold text-red-600">Payment Failed</h2>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 text-center">
+        {/* Icon */}
+        <div className="flex justify-center mb-5">
+          <div className="bg-red-100 p-4 rounded-full">
+            <XCircle className="w-10 h-10 text-red-600" />
+          </div>
+        </div>
 
-      <p className="mt-3 text-gray-700">
-        Scholarship: {scholarshipData.scholarshipName}
-      </p>
-      <p className="text-gray-700">
-        University: {scholarshipData.universityName}
-      </p>
+        {/* Title */}
+        <h1 className="text-2xl font-bold text-red-600 mb-3">Payment Failed</h1>
 
-      <Link
-        to="/dashboard/my-applications"
-        className="btn btn-primary w-full mt-6"
-      >
-        Return to Dashboard
-      </Link>
+        {/* Scholarship Name */}
+        {scholarshipName && (
+          <p className="text-gray-700 mb-2">
+            Scholarship:{" "}
+            <span className="font-semibold">{scholarshipName}</span>
+          </p>
+        )}
+
+        {/* Error Message */}
+        <p className="text-gray-500 text-sm mb-6">{errorMessage}</p>
+
+        {/* Action */}
+        <div className="flex flex-col gap-3">
+          <Link
+            to="/dashboard/my-applications"
+            className="btn btn-primary w-full"
+          >
+            Go to My Applications
+          </Link>
+          <Link to="/dashboard" className="btn btn-outline w-full">
+            Return to Dashboard
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

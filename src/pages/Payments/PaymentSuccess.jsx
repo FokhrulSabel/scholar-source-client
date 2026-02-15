@@ -7,7 +7,6 @@ const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
   const axiosSecure = useAxiosSecure();
-  console.log(sessionId);
 
   const [paymentData, setPaymentData] = useState(null);
 
@@ -17,25 +16,15 @@ const PaymentSuccess = () => {
     axiosSecure
       .get(`/payment-verify?session_id=${sessionId}`)
       .then((res) => {
-        setPaymentData(res.data);
+        setPaymentData(res.data?.applicationData);
       })
-      .catch((err) => {
-        // HANDLE DUPLICATE PAYMENT
-        if (err.response?.status === 409) {
-          setPaymentData({
-            success: true,
-            message: "Payment already verified",
-          });
-          return;
-        }
+      .catch((err) => console.log(err.response.data));
+  }, [sessionId, axiosSecure]);
 
-        console.log(err.response?.data);
-      });
-  }, [sessionId]);
-  console.log(paymentData);
   if (!paymentData) {
-    return <Loader></Loader>;
+    return <Loader />;
   }
+
   return (
     <div className="max-w-md mx-auto p-6 shadow-lg rounded-xl bg-white">
       <h2 className="text-2xl font-bold mb-4 text-center">

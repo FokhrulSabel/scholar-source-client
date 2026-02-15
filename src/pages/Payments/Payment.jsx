@@ -52,7 +52,7 @@ const Payment = () => {
       </h2>
 
       <p className="text-gray-600 text-center mb-4">
-        {scholarship.universityName} — {scholarship.country}
+        {scholarship.universityName} — {scholarship.universityCountry}
       </p>
 
       <div className="flex justify-between text-lg font-semibold mb-4">

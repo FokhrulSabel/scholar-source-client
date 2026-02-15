@@ -12,7 +12,7 @@ const MyApplications = () => {
   const axiosSecure = useAxiosSecure();
 
   const [selectedApplication, setSelectedApplication] = useState(null);
-  const [showDetailsModal, setshowDetailsModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewData, setReviewData] = useState({ rating: 0, comment: "" });
 
@@ -49,7 +49,7 @@ const MyApplications = () => {
   };
   // Handle Delete
   const handleDelete = async (id) => {
-    const Confirm = await Swal.fire({
+    const Conferm = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
@@ -58,7 +58,7 @@ const MyApplications = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     });
-    if (Confirm.isConfirmed) {
+    if (Conferm.isConfirmed) {
       try {
         const res = await axiosSecure.delete(`/my-applications/${id}`);
         if (res.data.success) {
@@ -76,12 +76,12 @@ const MyApplications = () => {
   };
   // Handle create review
 
-  const handleReview = async (applicationInfo) => {
+  const handleReview = async (appliInfo) => {
     try {
       const payload = {
-        scholarshipId: applicationInfo.scholarshipId,
-        scholarshipName: applicationInfo.scholarshipName,
-        universityName: applicationInfo.universityName,
+        scholarshipId: appliInfo.scholarshipId,
+        scholarshipName: appliInfo.scholarshipName,
+        universityName: appliInfo.universityName,
         userName: user.displayName,
         userEmail: user.email,
         userImage: user.photoURL,
@@ -156,7 +156,7 @@ const MyApplications = () => {
                   <button
                     className="btn btn-sm btn-info"
                     onClick={() => {
-                      (setshowDetailsModal(true),
+                      (setShowDetailsModal(true),
                         setSelectedApplication(application));
                     }}
                   >
@@ -164,9 +164,9 @@ const MyApplications = () => {
                   </button>
 
                   {/* EDIT BUTTON*/}
-                  {application.ApplicationStatus === "pending" && (
+                  {/* {application.ApplicationStatus === "pending" && (
                     <button className="btn btn-sm btn-warning">Edit</button>
-                  )}
+                  )} */}
 
                   {/* PAY BUTTON */}
                   {application.ApplicationStatus === "pending" &&
@@ -240,7 +240,7 @@ const MyApplications = () => {
             <div className="modal-action">
               <button
                 className="btn"
-                onClick={() => setshowDetailsModal(false)}
+                onClick={() => setShowDetailsModal(false)}
               >
                 Close
               </button>
