@@ -4,7 +4,11 @@ import { CgProfile } from "react-icons/cg";
 import { FaHistory, FaSlidersH, FaUser } from "react-icons/fa";
 import { MdEditDocument, MdOutlinePostAdd, MdSchool } from "react-icons/md";
 import { IoMdHome, IoMdSettings } from "react-icons/io";
-import { RiChatSettingsFill, RiMessageLine } from "react-icons/ri";
+import {
+  RiChatSettingsFill,
+  RiFileSettingsLine,
+  RiMessageLine,
+} from "react-icons/ri";
 import { GoGraph } from "react-icons/go";
 import { FileUser } from "lucide-react";
 import useRole from "../hooks/useRole";
@@ -153,6 +157,19 @@ const DashboardLayout = () => {
               >
                 <GoGraph size={24} />
                 <span className="is-drawer-close:hidden">Data Analytics</span>
+              </NavLink>
+            </li>
+
+            {/* All Reviews */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="All Reviews"
+                to="/dashboard/all-reviews 
+"
+              >
+                <RiFileSettingsLine size={24} />
+                <span className="is-drawer-close:hidden">All Reviews</span>
               </NavLink>
             </li>
 

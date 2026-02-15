@@ -22,6 +22,7 @@ import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 import ErrorPage from "../components/ErrorPage/ErrorPage";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import DataAnalytics from "../pages/Dashboard/DataAnalytics/DataAnalytics";
+import AllReviews from "../pages/Dashboard/AllReviews/AllReviews";
 
 const router = createBrowserRouter([
   {
@@ -116,6 +117,10 @@ const router = createBrowserRouter([
       {
         path: "data-analytics",
         Component: DataAnalytics,
+      },
+      {
+        path: "all-reviews",
+        Component: AllReviews,
       },
     ],
   },
