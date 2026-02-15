@@ -16,7 +16,7 @@ const Payment = () => {
       return res.data;
     },
   });
-  console.log(scholarship);
+  // console.log(scholarship);
   const handlePayment = async () => {
     // Store data for payment failure page
     localStorage.setItem("scholarshipId", scholarship._id);
@@ -35,7 +35,7 @@ const Payment = () => {
       universityName: scholarship.universityName,
       studentEmail: user.email,
     };
-    console.log(paymentInfo);
+    // console.log(paymentInfo);
 
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
 

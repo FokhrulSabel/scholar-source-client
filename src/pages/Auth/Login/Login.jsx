@@ -16,13 +16,10 @@ const Login = () => {
   const handleLogIn = async (data) => {
     try {
       const res = await signInUser(data.email, data.password);
-
       const user = res.user;
-
-      // 🔥 Get Firebase ID Token
       const idToken = await user.getIdToken();
 
-      console.log("ID Token:", idToken);
+      // console.log("ID Token:", idToken);
 
       // Optional: store token if you are not using axios interceptor
       // localStorage.setItem("access-token", idToken);

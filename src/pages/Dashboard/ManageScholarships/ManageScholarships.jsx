@@ -27,7 +27,7 @@ const ManageScholarships = () => {
 
   // Delete scholarship
   const handleDelete = (id) => {
-    console.log(id);
+    // console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -39,7 +39,7 @@ const ManageScholarships = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.delete(`/scholarships/${id}`).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.deletedCount) {
             // Refetch the data
             refetch();

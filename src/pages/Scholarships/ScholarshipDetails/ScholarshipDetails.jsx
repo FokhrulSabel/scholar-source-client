@@ -7,7 +7,7 @@ import Loader from "../../../components/Loader/Loader";
 
 const ScholarshipDetails = () => {
   const { id } = useParams();
-  console.log("ID FROM PARAM:", id);
+  // console.log("ID FROM PARAM:", id);
 
   const axiosInstance = useAxios();
   //   data fetching

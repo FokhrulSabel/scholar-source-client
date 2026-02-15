@@ -44,7 +44,7 @@ const EditScholarship = () => {
   } = scholarship;
 
   const handleEditScholarship = async (data) => {
-    console.log(data);
+    // console.log(data);
     const res = await axiosSecure.put(`/scholarships/${id}`, data);
 
     if (res.data.success) {

@@ -7,6 +7,7 @@ import {
   Linkedin,
   Github,
 } from "lucide-react";
+import Logo from "../ui/Logo/Logo";
 
 const Footer = () => {
   return (
@@ -16,10 +17,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <GraduationCap className="w-8 h-8 text-primary" />
-              <h2 className="text-xl font-bold text-base-content">
-                ScholarStream
-              </h2>
+              <Logo></Logo>
             </div>
 
             <p className="text-base-content/70 text-sm leading-relaxed">
@@ -120,7 +118,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-6 border-t border-base-300 text-center text-sm text-base-content/60">
-          © {new Date().getFullYear()} ScholarStream. All rights reserved.
+          © {new Date().getFullYear()} ScholarSource. All rights reserved.
         </div>
       </div>
     </footer>

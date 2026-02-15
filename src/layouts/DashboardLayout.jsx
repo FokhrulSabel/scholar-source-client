@@ -14,6 +14,7 @@ import { GoGraph } from "react-icons/go";
 import useAuth from "../hooks/useAuth";
 import { CgProfile } from "react-icons/cg";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import Logo from "../components/ui/Logo/Logo";
 
 const DashBoardLayout = () => {
   const { role } = useRole();
@@ -32,7 +33,7 @@ const DashBoardLayout = () => {
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-content flex flex-col">
-        <nav className="sticky top-0 z-30 backdrop-blur-xl bg-base-100/70 border-b border-base-200 px-6 h-16 flex items-center">
+        <nav className="sticky top-0 z-30 backdrop-blur-xl bg-base-100/70 border-b border-base-200 px-6 h-24 flex items-center">
           <div className="flex-none lg:hidden">
             <label htmlFor="my-drawer-4" className="btn btn-ghost btn-square">
               <HiOutlineMenuAlt2 size={22} />
@@ -70,7 +71,7 @@ const DashBoardLayout = () => {
 
         <div className="w-72 bg-base-100 border-r border-base-200 flex flex-col">
           {/* Logo */}
-          <div className="h-16 flex items-center px-6 border-b border-base-200">
+          {/* <div className="h-24 flex items-center px-6 border-b border-base-200">
             <Link to="/" className="flex items-center gap-3">
               <div className="w-9 h-9 bg-primary text-white flex items-center justify-center rounded-xl shadow-md">
                 <MdSchool size={20} />
@@ -79,7 +80,8 @@ const DashBoardLayout = () => {
                 Scholar<span className="text-primary">Source</span>
               </span>
             </Link>
-          </div>
+          </div> */}
+          <Logo></Logo>
 
           {/* Menu */}
           <ul className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
@@ -91,7 +93,7 @@ const DashBoardLayout = () => {
                 `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
-              <IoMdHome size={18} />
+              <IoMdHome size={24} />
               Home
             </NavLink>
 
@@ -101,7 +103,7 @@ const DashBoardLayout = () => {
                 `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
-              <CgProfile size={18} />
+              <CgProfile size={24} />
               My Profile
             </NavLink>
 
@@ -118,7 +120,7 @@ const DashBoardLayout = () => {
                     `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
                   }
                 >
-                  <FaUser size={16} />
+                  <FaUser size={24} />
                   User Control
                 </NavLink>
 
@@ -128,7 +130,7 @@ const DashBoardLayout = () => {
                     `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
                   }
                 >
-                  <TiDocumentAdd size={18} />
+                  <TiDocumentAdd size={24} />
                   Add Scholarship
                 </NavLink>
 
@@ -138,7 +140,7 @@ const DashBoardLayout = () => {
                     `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
                   }
                 >
-                  <MdEditDocument size={18} />
+                  <MdEditDocument size={24} />
                   Manage Scholarship
                 </NavLink>
 
@@ -148,7 +150,7 @@ const DashBoardLayout = () => {
                     `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
                   }
                 >
-                  <GoGraph size={18} />
+                  <GoGraph size={24} />
                   Analytics
                 </NavLink>
               </>
@@ -167,7 +169,7 @@ const DashBoardLayout = () => {
                     `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
                   }
                 >
-                  <RiChatSettingsFill size={18} />
+                  <RiChatSettingsFill size={24} />
                   Manage Application
                 </NavLink>
 
@@ -177,7 +179,7 @@ const DashBoardLayout = () => {
                     `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
                   }
                 >
-                  <RiFileSettingsLine size={18} />
+                  <RiFileSettingsLine size={24} />
                   Review Center
                 </NavLink>
               </>
@@ -194,7 +196,7 @@ const DashBoardLayout = () => {
                 `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
-              <FaRegFileAlt size={16} />
+              <FaRegFileAlt size={24} />
               My Applications
             </NavLink>
 
@@ -204,7 +206,7 @@ const DashBoardLayout = () => {
                 `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
-              <RiMessageLine size={16} />
+              <RiMessageLine size={24} />
               Feedback
             </NavLink>
           </ul>
