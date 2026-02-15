@@ -23,6 +23,8 @@ import ErrorPage from "../components/ErrorPage/ErrorPage";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 import DataAnalytics from "../pages/Dashboard/DataAnalytics/DataAnalytics";
 import AllReviews from "../pages/Dashboard/AllReviews/AllReviews";
+import AdminRoute from "./AdminRoute";
+import ModeratorRoute from "./ModeratorRoute";
 
 const router = createBrowserRouter([
   {
@@ -31,8 +33,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: "/",
-        element: <Home></Home>,
+        index: true,
+        Component: Home,
       },
       {
         path: "/all-scholarships",
@@ -88,16 +90,63 @@ const router = createBrowserRouter([
       },
       {
         path: "add-scholarship",
-        Component: AddScholarship,
-      },
-      {
-        path: "manage-scholarship",
-        Component: ManageScholarships,
+        element: (
+          <AdminRoute>
+            <AddScholarship></AddScholarship>
+          </AdminRoute>
+        ),
       },
       {
         path: "edit-scholarship/:id",
-        Component: EditScholarship,
+        element: (
+          <AdminRoute>
+            <EditScholarship></EditScholarship>
+          </AdminRoute>
+        ),
       },
+      {
+        path: "manage-scholarship",
+        element: (
+          <AdminRoute>
+            <ManageScholarships></ManageScholarships>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manage-users",
+        element: (
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "data-analytics",
+        element: (
+          <AdminRoute>
+            <DataAnalytics></DataAnalytics>
+          </AdminRoute>
+        ),
+      },
+
+      {
+        path: "manage-applications",
+        element: (
+          <ModeratorRoute>
+            <ManageApplications></ManageApplications>
+          </ModeratorRoute>
+        ),
+      },
+
+      {
+        path: "all-reviews",
+        element: (
+          <ModeratorRoute>
+            <AllReviews></AllReviews>
+          </ModeratorRoute>
+        ),
+      },
+
       {
         path: "my-applications",
         Component: MyApplications,
@@ -105,22 +154,6 @@ const router = createBrowserRouter([
       {
         path: "my-reviews",
         Component: MyReviews,
-      },
-      {
-        path: "manage-applications",
-        Component: ManageApplications,
-      },
-      {
-        path: "manage-users",
-        Component: ManageUsers,
-      },
-      {
-        path: "data-analytics",
-        Component: DataAnalytics,
-      },
-      {
-        path: "all-reviews",
-        Component: AllReviews,
       },
     ],
   },

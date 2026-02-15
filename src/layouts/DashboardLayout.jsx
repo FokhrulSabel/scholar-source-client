@@ -1,209 +1,230 @@
 import React from "react";
-import { Link, NavLink, Outlet } from "react-router";
-import { CgProfile } from "react-icons/cg";
-import { FaHistory, FaSlidersH, FaUser } from "react-icons/fa";
-import { MdEditDocument, MdOutlinePostAdd, MdSchool } from "react-icons/md";
-import { IoMdHome, IoMdSettings } from "react-icons/io";
+import { FaRegFileAlt, FaUser, FaUserCircle } from "react-icons/fa";
+import { IoMdHome } from "react-icons/io";
+import { MdEditDocument, MdSchool } from "react-icons/md";
 import {
   RiChatSettingsFill,
   RiFileSettingsLine,
   RiMessageLine,
 } from "react-icons/ri";
-import { GoGraph } from "react-icons/go";
-import { FileUser } from "lucide-react";
+import { TiDocumentAdd } from "react-icons/ti";
+import { Link, NavLink, Outlet } from "react-router";
 import useRole from "../hooks/useRole";
+import { GoGraph } from "react-icons/go";
+import useAuth from "../hooks/useAuth";
+import { CgProfile } from "react-icons/cg";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
 
-const DashboardLayout = () => {
+const DashBoardLayout = () => {
   const { role } = useRole();
-  console.log(role);
-  return (
-    <div className="drawer lg:drawer-open max-w-screen-2xl mx-auto bg-[#eaeced]">
-      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Navbar */}
-        <nav className="navbar w-full bg-base-300">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="open sidebar"
-            className="btn btn-square btn-ghost"
-          >
-            {/* Sidebar toggle icon */}
+  const { user } = useAuth();
 
-            <FaSlidersH />
-          </label>
-          <div className="px-4">SS DashBoard</div>
+  const navStyle =
+    "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200";
+
+  const activeStyle = "bg-primary/10 text-primary shadow-sm";
+
+  const inactiveStyle =
+    "text-base-content/70 hover:bg-base-200 hover:text-base-content";
+
+  return (
+    <div className="drawer lg:drawer-open max-w-screen-2xl mx-auto bg-base-100 min-h-screen">
+      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+
+      <div className="drawer-content flex flex-col">
+        <nav className="sticky top-0 z-30 backdrop-blur-xl bg-base-100/70 border-b border-base-200 px-6 h-16 flex items-center">
+          <div className="flex-none lg:hidden">
+            <label htmlFor="my-drawer-4" className="btn btn-ghost btn-square">
+              <HiOutlineMenuAlt2 size={22} />
+            </label>
+          </div>
+
+          <div className="flex-1">
+            <h1 className="text-lg font-semibold tracking-tight">
+              Dashboard Overview
+            </h1>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="avatar">
+              <div className="w-10 rounded-full ring ring-primary/30 ring-offset-2 ring-offset-base-100">
+                {user?.photoURL ? (
+                  <img src={user.photoURL} alt="profile" />
+                ) : (
+                  <FaUserCircle className="w-full h-full p-1 text-base-content/40" />
+                )}
+              </div>
+            </div>
+          </div>
         </nav>
-        <Outlet></Outlet>
+
+        <main className="p-8 bg-base-200/30 flex-grow">
+          <div className="bg-base-100 rounded-2xl shadow-sm border border-base-200 p-6 min-h-[80vh]">
+            <Outlet />
+          </div>
+        </main>
       </div>
 
-      <div className="drawer-side is-drawer-close:overflow-visible">
-        <label
-          htmlFor="my-drawer-4"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-        ></label>
-        <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-          {/* Sidebar content here */}
-          <ul className="menu w-full grow gap-6">
-            {/* List item */}
-            <li>
-              <Link
-                to="/"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Home page"
-              >
-                {/* Home icon */}
-                <MdSchool size={24} />
-                <span className="is-drawer-close:hidden">Home</span>
-              </Link>
-            </li>
-            {/* Dashboard Home */}
-            <li>
-              <Link
-                to="/dashboard"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="DashBoard Home"
-              >
-                {/* Home icon */}
+      <div className="drawer-side z-40">
+        <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
 
-                <IoMdHome size={22} />
-                <span className="is-drawer-close:hidden">
-                  Dashboard Homepage
-                </span>
-              </Link>
-            </li>
-            {/* My Profile */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Profile"
-                to="/dashboard/my-profile"
-              >
-                <CgProfile size={22} />
-                <span className="is-drawer-close:hidden">My Profile</span>
-              </NavLink>
-            </li>
+        <div className="w-72 bg-base-100 border-r border-base-200 flex flex-col">
+          {/* Logo */}
+          <div className="h-16 flex items-center px-6 border-b border-base-200">
+            <Link to="/" className="flex items-center gap-3">
+              <div className="w-9 h-9 bg-primary text-white flex items-center justify-center rounded-xl shadow-md">
+                <MdSchool size={20} />
+              </div>
+              <span className="text-lg font-bold tracking-tight">
+                Scholar<span className="text-primary">Source</span>
+              </span>
+            </Link>
+          </div>
 
-            {/* AddScholarShip */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Add Scholarship"
-                to="/dashboard/add-scholarship"
-              >
-                <MdOutlinePostAdd size={24} />
+          {/* Menu */}
+          <ul className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            {/* General */}
+            <NavLink
+              to="/dashboard"
+              end
+              className={({ isActive }) =>
+                `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+              }
+            >
+              <IoMdHome size={18} />
+              Home
+            </NavLink>
 
-                <span className="is-drawer-close:hidden">Add ScholarShip</span>
-              </NavLink>
-            </li>
+            <NavLink
+              to="/dashboard/my-profile"
+              className={({ isActive }) =>
+                `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+              }
+            >
+              <CgProfile size={18} />
+              My Profile
+            </NavLink>
 
-            {/* Manage ScholarShip */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Manage Scholarship"
-                to="/dashboard/manage-scholarship"
-              >
-                <MdEditDocument size={22} />
-                <span className="is-drawer-close:hidden">
-                  Manage ScholarShip
-                </span>
-              </NavLink>
-            </li>
+            {/* Admin */}
+            {role === "admin" && (
+              <>
+                <p className="text-xs uppercase tracking-wider text-base-content/40 mt-6 px-3">
+                  Admin
+                </p>
 
-            {/* Manage Users */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Manage Users"
-                to="/dashboard/manage-users"
-              >
-                <FaUser size={22} />
-                <span className="is-drawer-close:hidden">
-                  Users Management{" "}
-                </span>
-              </NavLink>
-            </li>
+                <NavLink
+                  to="/dashboard/manage-users"
+                  className={({ isActive }) =>
+                    `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+                  }
+                >
+                  <FaUser size={16} />
+                  User Control
+                </NavLink>
 
-            {/* My Applications */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Applications"
-                to="/dashboard/my-applications"
-              >
-                <FileUser size={24} />
-                <span className="is-drawer-close:hidden">My Applications</span>
-              </NavLink>
-            </li>
-            {/* My reviews */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My Reviews"
-                to="/dashboard/my-reviews"
-              >
-                <RiMessageLine size={24} />
-                <span className="is-drawer-close:hidden">My Reviews</span>
-              </NavLink>
-            </li>
+                <NavLink
+                  to="/dashboard/add-scholarship"
+                  className={({ isActive }) =>
+                    `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+                  }
+                >
+                  <TiDocumentAdd size={18} />
+                  Add Scholarship
+                </NavLink>
 
-            {/* Data Analytics */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Data Analytics"
-                to="/dashboard/data-analytics"
-              >
-                <GoGraph size={24} />
-                <span className="is-drawer-close:hidden">Data Analytics</span>
-              </NavLink>
-            </li>
+                <NavLink
+                  to="/dashboard/manage-scholarship"
+                  className={({ isActive }) =>
+                    `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+                  }
+                >
+                  <MdEditDocument size={18} />
+                  Manage Scholarship
+                </NavLink>
 
-            {/* All Reviews */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="All Reviews"
-                to="/dashboard/all-reviews 
-"
-              >
-                <RiFileSettingsLine size={24} />
-                <span className="is-drawer-close:hidden">All Reviews</span>
-              </NavLink>
-            </li>
+                <NavLink
+                  to="/dashboard/data-analytics"
+                  className={({ isActive }) =>
+                    `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+                  }
+                >
+                  <GoGraph size={18} />
+                  Analytics
+                </NavLink>
+              </>
+            )}
 
-            {/* Manage Application */}
-            <li>
-              <NavLink
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Manage Application"
-                to="/dashboard/manage-applications"
-              >
-                <RiChatSettingsFill size={24} />
-                <span className="is-drawer-close:hidden">
-                  Manage Application{" "}
-                </span>
-              </NavLink>
-            </li>
+            {/* Moderator */}
+            {(role === "admin" || role === "moderator") && (
+              <>
+                <p className="text-xs uppercase tracking-wider text-base-content/40 mt-6 px-3">
+                  Operations
+                </p>
 
-            {/* List item */}
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
-              >
-                {/* Settings icon */}
+                <NavLink
+                  to="/dashboard/manage-applications"
+                  className={({ isActive }) =>
+                    `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+                  }
+                >
+                  <RiChatSettingsFill size={18} />
+                  Manage Application
+                </NavLink>
 
-                <IoMdSettings size={22} />
-                <span className="is-drawer-close:hidden">Settings</span>
-              </button>
-            </li>
+                <NavLink
+                  to="/dashboard/all-reviews"
+                  className={({ isActive }) =>
+                    `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+                  }
+                >
+                  <RiFileSettingsLine size={18} />
+                  Review Center
+                </NavLink>
+              </>
+            )}
+
+            {/* Student */}
+            <p className="text-xs uppercase tracking-wider text-base-content/40 mt-6 px-3">
+              Student
+            </p>
+
+            <NavLink
+              to="/dashboard/my-applications"
+              className={({ isActive }) =>
+                `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+              }
+            >
+              <FaRegFileAlt size={16} />
+              My Applications
+            </NavLink>
+
+            <NavLink
+              to="/dashboard/my-reviews"
+              className={({ isActive }) =>
+                `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+              }
+            >
+              <RiMessageLine size={16} />
+              Feedback
+            </NavLink>
           </ul>
+
+          {/* Bottom User Card */}
+          <div className="p-4 border-t border-base-200">
+            <div className="flex items-center gap-3 bg-base-200/60 rounded-2xl p-3">
+              <div className="w-10 h-10 bg-primary/20 text-primary flex items-center justify-center rounded-xl font-semibold">
+                {role?.[0]?.toUpperCase()}
+              </div>
+              <div>
+                <p className="text-sm font-medium capitalize">{role} Account</p>
+                <p className="text-xs text-base-content/50">Active Status</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default DashboardLayout;
+export default DashBoardLayout;

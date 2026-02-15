@@ -13,15 +13,24 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const handleLogIn = (data) => {
-    signInUser(data.email, data.password)
-      .then((res) => {
-        console.log(res.user);
-        navigate(location.state || "/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleLogIn = async (data) => {
+    try {
+      const res = await signInUser(data.email, data.password);
+
+      const user = res.user;
+
+      // 🔥 Get Firebase ID Token
+      const idToken = await user.getIdToken();
+
+      console.log("ID Token:", idToken);
+
+      // Optional: store token if you are not using axios interceptor
+      // localStorage.setItem("access-token", idToken);
+
+      navigate(location.state || "/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

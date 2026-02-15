@@ -165,7 +165,7 @@ const Register = () => {
             <Link
               state={location?.state}
               className="text-primary"
-              to="/auth/login"
+              to="/login"
             >
               Login
             </Link>
