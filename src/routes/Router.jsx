@@ -21,6 +21,7 @@ import ManageApplications from "../pages/Dashboard/ManageApplications/ManageAppl
 import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 import ErrorPage from "../components/ErrorPage/ErrorPage";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import DataAnalytics from "../pages/Dashboard/DataAnalytics/DataAnalytics";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
       {
         path: "manage-users",
         Component: ManageUsers,
+      },
+      {
+        path: "data-analytics",
+        Component: DataAnalytics,
       },
     ],
   },
