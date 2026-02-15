@@ -1,21 +1,19 @@
+import React from "react";
 import { useForm } from "react-hook-form";
-import {
-  GraduationCap,
-  MapPin,
-  Award,
-  DollarSign,
-  Calendar,
-  Mail,
-  Sparkles,
-  Send,
-} from "lucide-react";
+
+import Swal from "sweetalert2";
+import { GraduationCap } from "lucide-react";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddScholarship = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
+    formState: { errors },
   } = useForm({
     defaultValues: {
       scholarshipName: "",
@@ -37,209 +35,209 @@ const AddScholarship = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
-    await new Promise((res) => setTimeout(res, 1200));
-    alert("🎉 Scholarship Created Successfully");
-    reset();
+    try {
+      const submissionData = {
+        ...data,
+        universityWorldRank: Number(data.universityWorldRank),
+        tuitionFees: Number(data.tuitionFees),
+        applicationFees: Number(data.applicationFees),
+        serviceCharge: Number(data.serviceCharge),
+        postedUserEmail: user?.email,
+      };
+
+      const res = await axiosSecure.post("/scholarships", submissionData);
+
+      if (res.data.insertedId) {
+        Swal.fire({
+          icon: "success",
+          title: "Scholarship Published",
+          text: "The scholarship has been successfully added.",
+          confirmButtonColor: "#111827",
+        });
+      }
+    } catch (error) {
+      console.error("Error creating scholarship:", error);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-yellow-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 px-4 md:px-10 py-10">
       {/* Header */}
-      <div className="max-w-4xl mx-auto text-center mb-10">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-yellow-100 text-sm mb-6">
-          <Sparkles className="w-4 h-4 text-yellow-600" />
-          Create New Opportunity
+      <div className="text-center mb-12">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-black text-white shadow-lg mb-4">
+          <GraduationCap size={28} />
         </div>
-
-        <h1 className="text-4xl font-bold mb-3">
-          Add New <span className="text-yellow-600">Scholarship</span>
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+          Add New Scholarship
         </h1>
-
-        <p className="text-gray-600">
-          Help students discover life-changing educational opportunities.
+        <p className="text-gray-500 mt-3 max-w-xl mx-auto">
+          Create and publish a new scholarship opportunity for students
+          worldwide.
         </p>
       </div>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="max-w-4xl mx-auto space-y-6"
-      >
-        {/* ===== Basic Info ===== */}
-        <div className="bg-white rounded-xl p-6 border border-yellow-100 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <GraduationCap className="w-5 h-5 text-yellow-600" />
-            <h2 className="font-semibold text-lg">Basic Information</h2>
-          </div>
+      {/* Form Card */}
+      <div className="max-w-6xl mx-auto bg-white/80 backdrop-blur-xl border border-gray-200 rounded-3xl shadow-2xl p-8 md:p-14">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-14">
+          {/* -------------------- Program Details -------------------- */}
+          <section>
+            <h2 className="text-xl font-semibold text-gray-900 mb-8 border-b pb-3">
+              Program Details
+            </h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <input
-              placeholder="e.g., Global Excellence Award"
-              {...register("scholarshipName", { required: true })}
-              className="input input-bordered w-full"
-            />
-            <input
-              label="University Name"
-              name="universityName"
-              placeholder="University Name"
-              {...register("universityName", { required: true })}
-              className="input input-bordered w-full"
-            />
-          </div>
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Scholarship Name */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
+                  Scholarship Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Global Excellence Scholarship"
+                  className={`w-full h-12 px-4 rounded-xl border bg-gray-50 focus:ring-2 focus:ring-black focus:outline-none transition ${
+                    errors.scholarshipName
+                      ? "border-red-500"
+                      : "border-gray-200"
+                  }`}
+                  {...register("scholarshipName", {
+                    required: "Scholarship name is required",
+                  })}
+                />
+              </div>
 
-          <input
-            type="url"
-            placeholder="Image URL"
-            {...register("image")}
-            className="input input-bordered w-full mt-4"
-          />
-        </div>
+              {/* University Name */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
+                  University Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Oxford University"
+                  className={`w-full h-12 px-4 rounded-xl border bg-gray-50 focus:ring-2 focus:ring-black focus:outline-none transition ${
+                    errors.universityName ? "border-red-500" : "border-gray-200"
+                  }`}
+                  {...register("universityName", {
+                    required: "University name is required",
+                  })}
+                />
+              </div>
 
-        {/* ===== Location ===== */}
-        <div className="bg-white rounded-xl p-6 border border-yellow-100 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <MapPin className="w-5 h-5 text-yellow-600" />
-            <h2 className="font-semibold text-lg">Location Details</h2>
-          </div>
+              {/* Image URL */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
+                  University Image URL
+                </label>
+                <input
+                  type="url"
+                  placeholder="https://example.com/image.jpg"
+                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black focus:outline-none transition"
+                  {...register("universityImage")}
+                />
+              </div>
+            </div>
+          </section>
 
-          <div className="grid md:grid-cols-3 gap-4">
-            <input
-              placeholder="Country"
-              {...register("country", { required: true })}
-              className="input input-bordered"
-            />
-            <input
-              placeholder="City"
-              {...register("city")}
-              className="input input-bordered"
-            />
-            <input
-              type="number"
-              placeholder="World Rank"
-              {...register("worldRank")}
-              className="input input-bordered"
-            />
-          </div>
-        </div>
+          {/* -------------------- Eligibility -------------------- */}
+          <section>
+            <h2 className="text-xl font-semibold text-gray-900 mb-8 border-b pb-3">
+              Eligibility & Location
+            </h2>
 
-        {/* ===== Classification ===== */}
-        <div className="bg-white rounded-xl p-6 border border-yellow-100 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <Award className="w-5 h-5 text-yellow-600" />
-            <h2 className="font-semibold text-lg">Classification</h2>
-          </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div>
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
+                  Country
+                </label>
+                <input
+                  type="text"
+                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
+                  {...register("universityCountry", { required: true })}
+                />
+              </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
-            <select
-              {...register("subjectCategory")}
-              className="select select-bordered"
+              <div>
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
+                  Subject Category
+                </label>
+                <select
+                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
+                  {...register("subjectCategory", { required: true })}
+                >
+                  <option>STEM</option>
+                  <option>Arts & Humanities</option>
+                  <option>Business & Law</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
+                  Degree Level
+                </label>
+                <select
+                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
+                  {...register("degree", { required: true })}
+                >
+                  <option>Undergraduate</option>
+                  <option>Master's</option>
+                  <option>PhD</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          {/* -------------------- Financial Details -------------------- */}
+          <section>
+            <h2 className="text-xl font-semibold text-gray-900 mb-8 border-b pb-3">
+              Financial Details
+            </h2>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <div>
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
+                  Application Fee
+                </label>
+                <input
+                  type="number"
+                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
+                  {...register("applicationFees")}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
+                  Service Charge
+                </label>
+                <input
+                  type="number"
+                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
+                  {...register("serviceCharge")}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-600 mb-2">
+                  Application Deadline
+                </label>
+                <input
+                  type="date"
+                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
+                  {...register("applicationDeadline", { required: true })}
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Submit Button */}
+          <div className="text-center pt-6">
+            <button
+              type="submit"
+              className="px-10 py-4 rounded-2xl bg-black text-white font-semibold text-lg hover:opacity-90 active:scale-95 transition-all shadow-lg"
             >
-              <option>STEM</option>
-              <option>Arts & Humanities</option>
-              <option>Business & Law</option>
-              <option>Social Sciences</option>
-            </select>
-
-            <select
-              {...register("scholarshipCategory")}
-              className="select select-bordered"
-            >
-              <option>Full Funded</option>
-              <option>Partially Funded</option>
-              <option>Self Funded</option>
-            </select>
-
-            <select {...register("degree")} className="select select-bordered">
-              <option>Undergraduate</option>
-              <option>Masters</option>
-              <option>PhD</option>
-            </select>
+              Publish Scholarship
+            </button>
           </div>
-        </div>
-
-        {/* ===== Financial ===== */}
-        <div className="bg-white rounded-xl p-6 border border-yellow-100 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <DollarSign className="w-5 h-5 text-yellow-600" />
-            <h2 className="font-semibold text-lg">Financial Information</h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4">
-            <input
-              type="number"
-              placeholder="Tuition Fees"
-              {...register("tuitionFees")}
-              className="input input-bordered"
-            />
-            <input
-              type="number"
-              placeholder="Application Fees"
-              {...register("applicationFees")}
-              className="input input-bordered"
-            />
-            <input
-              type="number"
-              placeholder="Service Charge"
-              {...register("serviceCharge")}
-              className="input input-bordered"
-            />
-          </div>
-        </div>
-
-        {/* ===== Dates ===== */}
-        <div className="bg-white rounded-xl p-6 border border-yellow-100 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <Calendar className="w-5 h-5 text-yellow-600" />
-            <h2 className="font-semibold text-lg">Important Dates</h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <input
-              type="date"
-              {...register("deadline", { required: true })}
-              className="input input-bordered"
-            />
-            <input
-              type="date"
-              {...register("postDate")}
-              className="input input-bordered"
-            />
-          </div>
-        </div>
-
-        {/* ===== Contact ===== */}
-        <div className="bg-white rounded-xl p-6 border border-yellow-100 shadow-sm">
-          <div className="flex items-center gap-2 mb-4">
-            <Mail className="w-5 h-5 text-yellow-600" />
-            <h2 className="font-semibold text-lg">Contact Information</h2>
-          </div>
-
-          <input
-            type="email"
-            placeholder="Your Email"
-            {...register("userEmail", { required: true })}
-            className="input input-bordered w-full"
-          />
-        </div>
-
-        {/* ===== Submit ===== */}
-        <div className="flex justify-center pt-6">
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="px-10 py-4 rounded-xl bg-yellow-500 hover:bg-yellow-600 text-white font-semibold flex items-center gap-2 transition"
-          >
-            {isSubmitting ? (
-              "Creating..."
-            ) : (
-              <>
-                <Send className="w-5 h-5" />
-                Create Scholarship
-              </>
-            )}
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
