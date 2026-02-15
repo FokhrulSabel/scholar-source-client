@@ -20,6 +20,7 @@ import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
 import ManageApplications from "../pages/Dashboard/ManageApplications/ManageApplications";
 import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 import ErrorPage from "../components/ErrorPage/ErrorPage";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        index: true,
+        Component: DashboardHome,
+      },
       {
         path: "my-profile",
         Component: MyProfile,

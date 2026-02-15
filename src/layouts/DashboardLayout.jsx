@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { CgProfile } from "react-icons/cg";
 import { FaHistory, FaSlidersH, FaUser } from "react-icons/fa";
-import { MdEditDocument, MdOutlinePostAdd } from "react-icons/md";
+import { MdEditDocument, MdOutlinePostAdd, MdSchool } from "react-icons/md";
 import { IoMdHome, IoMdSettings } from "react-icons/io";
 import { RiChatSettingsFill, RiMessageLine } from "react-icons/ri";
 import { FileUser } from "lucide-react";
@@ -45,12 +45,26 @@ const DashboardLayout = () => {
               <Link
                 to="/"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
+                data-tip="Home page"
+              >
+                {/* Home icon */}
+                <MdSchool size={24} />
+                <span className="is-drawer-close:hidden">Home</span>
+              </Link>
+            </li>
+            {/* Dashboard Home */}
+            <li>
+              <Link
+                to="/dashboard"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="DashBoard Home"
               >
                 {/* Home icon */}
 
                 <IoMdHome size={22} />
-                <span className="is-drawer-close:hidden">Homepage</span>
+                <span className="is-drawer-close:hidden">
+                  Dashboard Homepage
+                </span>
               </Link>
             </li>
             {/* My Profile */}
