@@ -3,26 +3,34 @@ import ScholarshipCard from "../../../components/ui/ScholarshipCard/ScholarshipC
 import useAxios from "../../../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../../components/Loader/Loader";
+import { motion } from "framer-motion";
+import { GrNext, GrPrevious } from "react-icons/gr";
+import { FaSearch } from "react-icons/fa";
 
 const AllScholarships = () => {
   const axiosInstance = useAxios();
+
+  // Filters & Pagination
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [country, setCountry] = useState("");
   const [subject, setSubject] = useState("");
   const [degree, setDegree] = useState("");
+  const [sort, setSort] = useState("latest");
   const [page, setPage] = useState(1);
   const limit = 6;
-  // console.log(filter);
 
+  // Debounce search input
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
+      setPage(1);
     }, 400);
 
     return () => clearTimeout(timer);
   }, [search]);
 
+  // Fetch Scholarships
   const { data, isLoading, isFetching, error } = useQuery({
     queryKey: [
       "scholarships",
@@ -30,144 +38,210 @@ const AllScholarships = () => {
       country,
       subject,
       degree,
-      limit,
+      sort,
       page,
     ],
     queryFn: async () => {
       const params = new URLSearchParams({
         search: debouncedSearch,
         country,
-        subject,
+        category: subject,
         degree,
+        sort,
         limit,
         page,
       });
-      const res = await axiosInstance.get(`/all-scholarships?${params.toString()}`);
+
+      const res = await axiosInstance.get(`/all-scholarships?${params}`);
       return res.data;
     },
     keepPreviousData: true,
+    staleTime: 1000 * 60, // cache 1 min
   });
+
   const scholarships = data?.scholarships || [];
   const totalPages = data?.totalPages || 1;
 
-  // input handler
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
+  const resetFilters = () => {
+    setSearch("");
+    setCountry("");
+    setSubject("");
+    setDegree("");
+    setSort("latest");
+    setPage(1);
   };
-  // input handler
-  const handleFilter = (e) => {
-    setSubject(e.target.value);
-    // refetch();
-  };
-
-  if (error) return <h2>Error</h2>;
 
   return (
-    <div className="px-4 py-10">
-      {/* Top Filter Bar */}
-      <div className="bg-white p-4 my-5 rounded-2xl shadow-md border border-gray-200 flex flex-wrap items-center gap-4">
-        {/* Left Filter Label */}
-        <button className="flex items-center gap-2 bg-neutral text-white px-5 py-3 rounded-xl font-semibold shadow-sm">
-          <span className="text-lg">⚙️</span> Filter Scholarships
-        </button>
-
-        {/* Search bar */}
-        <div className="h-7 w-px bg-gray-300 hidden md:block"></div>
-
-        <input
-          onChange={handleSearch}
-          type="text"
-          placeholder="Search scholarships..."
-          className="input input-bordered rounded-xl w-60 shadow-sm"
-        />
-
-        {/* Subject Filter */}
-        <div className="h-7 w-px bg-gray-300 hidden md:block"></div>
-
-        <select
-          onChange={handleFilter}
-          className="select select-bordered rounded-xl w-40 shadow-sm"
-        >
-          <option disabled selected>
-            Subject Category
-          </option>
-          <option value="STEM">STEM</option>
-          <option value="General">General</option>
-          <option value="Engineering">Engineering</option>
-          <option value="Arts">Arts</option>
-          <option value="Business">Business</option>
-          <option value="Leadership">Leadership</option>
-          <option value="Medical">Medical</option>
-        </select>
-
-        {/* Scholarship Category */}
-        <div className="h-7 w-px bg-gray-300 hidden md:block"></div>
-
-        <select
-          onClick={(e) => setDegree(e.target.value)}
-          className="select select-bordered rounded-xl w-40 shadow-sm"
-        >
-          <option disabled selected>
-            Degree
-          </option>
-          <option value="Undergraduate">Undergraduate</option>
-          <option value="Graduate">Graduate</option>
-        </select>
-        {/* Location Filter */}
-        <div className="h-7 w-px bg-gray-300 hidden md:block"></div>
-
-        <select
-          onChange={(e) => setCountry(e.target.value)}
-          className="select select-bordered rounded-xl w-40 shadow-sm"
-        >
-          <option disabled selected>
-            Country
-          </option>
-          <option value="USA">USA</option>
-          <option value="UK">UK</option>
-          <option value="Singapore">Singapore</option>
-          <option value="Canada">Canada</option>
-          <option value="Japan">Japan</option>
-        </select>
-      </div>
-
-      {/* Grid */}
-      {isLoading || isFetching ? (
-        <Loader></Loader>
-      ) : scholarships.length === 0 ? (
-        <div className="flex flex-col justify-center items-center h-[60vh] text-center">
-          <h2 className="text-4xl font-bold text-gray-600 mb-3">
-            No ScholarShips Found
-          </h2>
+    <div className="min-h-screen bg-gray-50 px-6 py-12">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-10">
+          <h1 className="text-3xl font-semibold text-gray-900">
+            Explore Scholarships
+          </h1>
+          <p className="text-sm text-gray-500 mt-2">
+            Discover global opportunities tailored to your academic goals.
+          </p>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {scholarships.map((item, index) => (
-            <ScholarshipCard key={index} item={item}></ScholarshipCard>
-          ))}
+
+        {/* Filter Bar */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-10 shadow-sm">
+          <div className="grid md:grid-cols-6 gap-4">
+            {/* Search */}
+            <div className="relative md:col-span-2">
+              <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm" />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                type="text"
+                placeholder="Search scholarships..."
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+              />
+            </div>
+
+            {/* Subject */}
+            {/* <select
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900"
+            >
+              <option value="">All Subjects</option>
+              <option value="Artificial Intelligence">
+                Artificial Intelligence
+              </option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Cyber Security">Cyber Security</option>
+              <option value="Software Engineering">Software Engineering</option>
+            </select> */}
+
+            {/* Degree */}
+            <select
+              value={degree}
+              onChange={(e) => setDegree(e.target.value)}
+              className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900"
+            >
+              <option value="">All Degrees</option>
+              <option value="Undergraduate">Undergraduate</option>
+              <option value="Masters">Masters</option>
+              <option value="PhD">PhD</option>
+            </select>
+
+            {/* Country */}
+            <select
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900"
+            >
+              <option value="">All Countries</option>
+              <option value="USA">USA</option>
+              <option value="UK">UK</option>
+              <option value="Canada">Canada</option>
+              <option value="Japan">Japan</option>
+              <option value="Australia">Australia</option>
+              <option value="Germany">Germany</option>
+              <option value="Singapore">Singapore</option>
+            </select>
+
+            {/* Sort */}
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900"
+            >
+              <option value="latest">Latest</option>
+              <option value="deadline">Deadline</option>
+              <option value="amount_high">Application Fees: High → Low</option>
+              <option value="amount_low">Application Fees: Low → High</option>
+            </select>
+          </div>
+
+          {/* Reset */}
+          <div className="mt-4 text-right">
+            <button
+              onClick={resetFilters}
+              className="text-sm font-medium text-gray-500 hover:text-gray-900 transition"
+            >
+              Reset Filters
+            </button>
+          </div>
         </div>
-      )}
-      <div className="flex gap-2 mt-6 justify-center">
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-          Prev
-        </button>
 
-        {[...Array(totalPages).keys()].map((num) => (
-          <button
-            key={num}
-            onClick={() => setPage(num + 1)}
-            className={page === num + 1 ? "bg-blue-500 text-white" : ""}
-          >
-            {num + 1}
-          </button>
-        ))}
+        {/* Error / Loading */}
+        {error && (
+          <div className="text-center text-red-500 py-10">
+            Something went wrong: {error.message || "Failed to fetch data."}
+          </div>
+        )}
 
-        <button
-          disabled={page === totalPages}
-          onClick={() => setPage(page + 1)}
-        >
-          Next
-        </button>
+        {isLoading || isFetching ? (
+          <Loader />
+        ) : scholarships.length === 0 ? (
+          <div className="text-center py-20">
+            <h2 className="text-2xl font-semibold text-gray-800">
+              No Results Found
+            </h2>
+            <p className="text-gray-500 mt-3">
+              Try adjusting your search criteria or reset filters.
+            </p>
+            <button
+              onClick={resetFilters}
+              className="mt-6 bg-gray-900 text-white px-6 py-2 rounded-lg text-sm hover:bg-gray-800 transition"
+            >
+              Clear Filters
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* Scholarships Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {scholarships.map((item, index) => (
+                <motion.div
+                  key={item._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                >
+                  <ScholarshipCard item={item} />
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="flex justify-center items-center gap-2 mt-12">
+              <button
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+                className="px-3 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-40 hover:bg-gray-100"
+              >
+                <GrPrevious />
+              </button>
+
+              {[...Array(totalPages).keys()].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => setPage(num + 1)}
+                  className={`px-4 py-2 rounded-lg text-sm border ${
+                    page === num + 1
+                      ? "bg-gray-900 text-white border-gray-900"
+                      : "border-gray-200 hover:bg-gray-100"
+                  }`}
+                >
+                  {num + 1}
+                </button>
+              ))}
+
+              <button
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
+                className="px-3 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-40 hover:bg-gray-100"
+              >
+                <GrNext />
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
