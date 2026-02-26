@@ -20,10 +20,7 @@ const useAxiosSecure = () => {
     if (interceptorAdded.current) return;
 
     interceptorAdded.current = true;
-
-    /* ======================
-       REQUEST INTERCEPTOR
-    ======================= */
+    // Request Interceptor
     axiosSecure.interceptors.request.use(
       async (config) => {
         try {
@@ -41,9 +38,7 @@ const useAxiosSecure = () => {
       (error) => Promise.reject(error),
     );
 
-    /* ======================
-       RESPONSE INTERCEPTOR
-    ======================= */
+    // Response Interceptor
     axiosSecure.interceptors.response.use(
       (response) => response,
       async (error) => {

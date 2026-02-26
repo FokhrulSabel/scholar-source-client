@@ -5,8 +5,6 @@ import Loader from "../../../components/Loader/Loader";
 import { toast, ToastContainer } from "react-toastify";
 import Swal from "sweetalert2";
 
-
-
 const ManageApplications = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedApp, setSelectedApp] = useState(null);
@@ -30,10 +28,18 @@ const ManageApplications = () => {
 
   // UPDATE STATUS
   const handleStatusUpdate = async (id, status) => {
-    const res = await axiosSecure.patch(`/all-applications/${id}`, { status });
-    if (res.data.success) {
-      toast.success("Status Updated!");
-      refetch();
+    try {
+      const res = await axiosSecure.patch(`/all-applications/${id}`, {
+        status,
+      });
+
+      if (res.data.success) {
+        toast.success("Status Updated!");
+        refetch();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || "Update failed");
     }
   };
 
@@ -69,18 +75,25 @@ const ManageApplications = () => {
 
   // ADD FEEDBACK
   const submitFeedback = async () => {
-    const res = await axiosSecure.patch(
-      `/all-applications/${selectedApp._id}`,
-      {
-        feedback: feedbackText,
-      },
-    );
+    if (!feedbackText.trim()) {
+      toast.error("Feedback cannot be empty");
+      return;
+    }
 
-    if (res.data.success) {
-      toast.success("Feedback Added!");
-      setShowFeedbackModal(false);
-      setFeedbackText("");
-      refetch();
+    try {
+      const res = await axiosSecure.patch(
+        `/all-applications/${selectedApp._id}`,
+        { feedback: feedbackText },
+      );
+
+      if (res.data.success) {
+        toast.success("Feedback Added!");
+        setShowFeedbackModal(false);
+        setFeedbackText("");
+        refetch();
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed");
     }
   };
 

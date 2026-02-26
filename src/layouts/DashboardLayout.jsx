@@ -207,7 +207,7 @@ const DashBoardLayout = () => {
               }
             >
               <RiMessageLine size={24} />
-              Feedback
+              Reviews
             </NavLink>
           </ul>
 

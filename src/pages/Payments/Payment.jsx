@@ -38,7 +38,7 @@ const Payment = () => {
       scholarshipName: scholarship.scholarshipName,
       universityName: scholarship.universityName,
       studentEmail: user.email,
-      userName: user.displayName,
+      userName: user.displayName || user.email?.split("@")[0] || "Student",
     };
 
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
