@@ -26,23 +26,44 @@ const PaymentSuccess = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto p-6 shadow-lg rounded-xl bg-white">
-      <h2 className="text-2xl font-bold mb-4 text-center">
-        Payment Successful!
-      </h2>
-      <p className="text-center mb-2">
-        Scholarship: {paymentData.scholarshipName}
-      </p>
-      <p className="text-center mb-2">
-        University: {paymentData.universityName}
-      </p>
-      <p className="text-center mb-2">Amount Paid: ${paymentData.amount}</p>
-      <p className="text-center mb-4">
-        Transaction ID: {paymentData.transactionId}
-      </p>
-      <Link to="/dashboard/my-applications" className="btn btn-primary w-full">
-        Go to My Applications
-      </Link>
+    <div className="min-h-[80vh] flex items-center justify-center px-4 bg-base-100">
+      <div className="max-w-md w-full bg-base-200 rounded-3xl shadow-xl border border-base-300 overflow-hidden">
+        <div className="h-2 bg-gradient-to-r from-[#d19ef1] via-[#8b3fd6] to-[#5a189a]" />
+
+        <div className="p-8 text-center">
+          <div className="text-5xl mb-4 text-primary">🎉</div>
+
+          <h2 className="text-2xl font-extrabold text-base-content mb-4">
+            Payment Successful!
+          </h2>
+
+          <div className="space-y-2 text-base-content/80">
+            <p>
+              <span className="font-semibold">Scholarship:</span>{" "}
+              {paymentData.scholarshipName}
+            </p>
+            <p>
+              <span className="font-semibold">University:</span>{" "}
+              {paymentData.universityName}
+            </p>
+            <p>
+              <span className="font-semibold">Amount Paid:</span> $
+              {paymentData.amount}
+            </p>
+            <p>
+              <span className="font-semibold">Transaction ID:</span>{" "}
+              {paymentData.transactionId}
+            </p>
+          </div>
+
+          <Link
+            to="/dashboard/my-applications"
+            className="mt-6 inline-block w-full py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-[#d19ef1] via-[#8b3fd6] to-[#5a189a] hover:opacity-90 transition"
+          >
+            Go to My Applications
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

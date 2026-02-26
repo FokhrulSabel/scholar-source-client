@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { Link, useParams } from "react-router";
 import useAuth from "../../hooks/useAuth";
-import { useParams } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loader from "../../components/Loader/Loader";
 
 const Payment = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { id: scholarshipId } = useParams();
+
   const { data: scholarship, isLoading } = useQuery({
     queryKey: ["scholarship", scholarshipId],
     queryFn: async () => {
@@ -16,7 +17,10 @@ const Payment = () => {
       return res.data;
     },
   });
-  // console.log(scholarship);
+  if (isLoading || loading) {
+    return <Loader></Loader>;
+  }
+
   const handlePayment = async () => {
     // Store data for payment failure page
     localStorage.setItem("scholarshipId", scholarship._id);
@@ -34,47 +38,78 @@ const Payment = () => {
       scholarshipName: scholarship.scholarshipName,
       universityName: scholarship.universityName,
       studentEmail: user.email,
+      userName: user.displayName,
     };
-    // console.log(paymentInfo);
 
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
 
     window.location.href = res.data.url;
   };
 
-  if (isLoading) {
-    return <Loader></Loader>;
-  }
   return (
-    <div className="max-w-md my-10 mx-auto p-6 shadow-lg rounded-xl bg-white">
-      <h2 className="text-xl font-bold mb-3 text-center">
-        Pay for {scholarship.scholarshipName}
-      </h2>
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-10 bg-base-100">
+      {user ? (
+        <div className="max-w-md w-full rounded-3xl bg-base-200 shadow-xl border border-base-300 overflow-hidden">
+          {/* Gradient Top */}
+          <div className="h-2 w-full bg-gradient-to-r from-[#d19ef1] via-[#8b3fd6] to-[#5a189a]" />
 
-      <p className="text-gray-600 text-center mb-4">
-        {scholarship.universityName} — {scholarship.universityCountry}
-      </p>
+          <div className="p-8">
+            <h2 className="text-2xl font-extrabold text-center text-base-content">
+              Complete Your Payment
+            </h2>
 
-      <div className="flex justify-between text-lg font-semibold mb-4">
-        <span>Application Fee:</span>
-        <span>${scholarship.applicationFees}</span>
-      </div>
+            <p className="text-center text-primary font-semibold mt-2">
+              {scholarship.scholarshipName}
+            </p>
 
-      <div className="flex justify-between text-lg font-semibold mb-4">
-        <span>Service Charge:</span>
-        <span>${scholarship.serviceCharge}</span>
-      </div>
+            <p className="text-center text-sm text-base-content/70 mb-6">
+              {scholarship.universityName} — {scholarship.country}
+            </p>
 
-      <hr className="my-3" />
+            <div className="space-y-3 text-base-content">
+              <div className="flex justify-between">
+                <span>Application Fee</span>
+                <span className="font-semibold">
+                  ${scholarship.applicationFees}
+                </span>
+              </div>
 
-      <div className="flex justify-between text-xl font-bold mb-6">
-        <span>Total Amount:</span>
-        <span>${scholarship.applicationFees + scholarship.serviceCharge}</span>
-      </div>
+              <div className="flex justify-between">
+                <span>Service Charge</span>
+                <span className="font-semibold">
+                  ${scholarship.serviceCharge}
+                </span>
+              </div>
 
-      <button onClick={handlePayment} className="btn btn-primary w-full">
-        Pay Now
-      </button>
+              <div className="border-t border-base-300 pt-3 flex justify-between text-lg font-bold">
+                <span>Total</span>
+                <span className="text-primary">
+                  ${scholarship.applicationFees + scholarship.serviceCharge}
+                </span>
+              </div>
+            </div>
+
+            <button
+              onClick={handlePayment}
+              className="mt-8 w-full py-3 rounded-xl text-white font-bold bg-gradient-to-r from-[#d19ef1] via-[#8b3fd6] to-[#5a189a] hover:opacity-90 transition-all duration-300"
+            >
+              Pay Now
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="max-w-md w-full bg-base-200 rounded-3xl shadow-xl p-8 text-center border border-base-300">
+          <h2 className="text-2xl font-black text-base-content">
+            Please Login First
+          </h2>
+          <Link
+            to="/auth/login"
+            className="mt-5 inline-block w-full py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-[#d19ef1] via-[#8b3fd6] to-[#5a189a]"
+          >
+            Login
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

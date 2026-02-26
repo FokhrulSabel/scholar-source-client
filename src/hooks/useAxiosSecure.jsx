@@ -1,37 +1,55 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
   baseURL: import.meta.env.VITE_SERVER_URL || "http://localhost:5000",
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 const useAxiosSecure = () => {
   const { user, signOutUser } = useAuth();
-  const token = user?.accessToken;
   const navigate = useNavigate();
 
+  const interceptorAdded = useRef(false);
+
   useEffect(() => {
-    // Request Interceptor
-    const requestInterceptor = axiosSecure.interceptors.request.use(
-      (config) => {
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
+    if (interceptorAdded.current) return;
+
+    interceptorAdded.current = true;
+
+    /* ======================
+       REQUEST INTERCEPTOR
+    ======================= */
+    axiosSecure.interceptors.request.use(
+      async (config) => {
+        try {
+          if (user) {
+            const token = await user.getIdToken();
+
+            config.headers.Authorization = `Bearer ${token}`;
+          }
+        } catch (err) {
+          console.error("Token fetch error", err);
         }
+
         return config;
       },
       (error) => Promise.reject(error),
     );
 
-    // Response Interceptor
-    const resInterceptor = axiosSecure.interceptors.response.use(
+    /* ======================
+       RESPONSE INTERCEPTOR
+    ======================= */
+    axiosSecure.interceptors.response.use(
       (response) => response,
       async (error) => {
-        const statusCode = error.response?.status;
+        const status = error.response?.status;
 
-        if (statusCode === 401 || statusCode === 403) {
+        if ((status === 401 || status === 403) && user) {
           await signOutUser();
           navigate("/login");
         }
@@ -39,12 +57,7 @@ const useAxiosSecure = () => {
         return Promise.reject(error);
       },
     );
-    // Cleanup
-    return () => {
-      axiosSecure.interceptors.request.eject(requestInterceptor);
-      axiosSecure.interceptors.response.eject(resInterceptor);
-    };
-  }, [token, signOutUser, navigate]);
+  }, [user, signOutUser, navigate]);
 
   return axiosSecure;
 };
