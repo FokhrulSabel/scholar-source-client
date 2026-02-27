@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {
   PieChart,
   Pie,
@@ -8,40 +8,61 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const COLORS = ["#d19ef1", "#b46be6", "#8b3fd6", "#6d28d9", "#5a189a"];
+const COLORS = [
+  "#d19ef1",
+  "#b46be6",
+  "#8b3fd6",
+  "#6d28d9",
+  "#5a189a",
+  "#4c1d95",
+];
 
 const UniversityPieChart = ({ universityData = [] }) => {
-  // Transform Data
-  const pieChartData = useMemo(() => {
-    return universityData.map((item) => ({
-      name: item.university,
-      value: item.count,
-    }));
-  }, [universityData]);
+  const pieChartData = universityData.map((item) => ({
+    name: item.university,
+    value: item.count,
+  }));
 
-  const totalApplications = useMemo(() => {
-    return pieChartData.reduce((acc, item) => acc + item.value, 0);
-  }, [pieChartData]);
+  const totalApplications = pieChartData.reduce(
+    (acc, cur) => acc + cur.value,
+    0,
+  );
 
-  const topUniversity = useMemo(() => {
-    if (!pieChartData.length) return "N/A";
-    return [...pieChartData].sort((a, b) => b.value - a.value)[0].name;
-  }, [pieChartData]);
+  const topUniversity =
+    pieChartData.sort((a, b) => b.value - a.value)[0]?.name || "N/A";
+
+  if (!pieChartData.length) {
+    return (
+      <div className="rounded-3xl bg-white shadow-lg p-10 text-center">
+        <p className="text-gray-400 font-semibold">
+          No university data available
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-base-100 border border-primary/10 rounded-3xl p-8 w-full transition-all duration-500 hover:shadow-xl hover:shadow-primary/10">
-      {/* Header */}
-      <div className="mb-8">
-        <h3 className="text-2xl font-bold text-base-content">
-          Application Distribution
+    <div
+      className="relative overflow-hidden rounded-[2.5rem] 
+    bg-gradient-to-br from-white to-purple-50
+    border border-purple-100
+    shadow-xl hover:shadow-2xl
+    transition-all duration-500 p-8"
+    >
+      {/* Glow Background */}
+      <div className="absolute -top-20 -right-20 w-72 h-72 bg-purple-300/20 blur-3xl rounded-full"></div>
+
+      <div className="relative mb-8">
+        <h3 className="text-2xl font-black text-[#5a189a]">
+          University Distribution
         </h3>
-        <p className="text-sm text-base-content/60 mt-1">
-          Breakdown of scholarship applications by university
+
+        <p className="text-xs font-semibold text-purple-400 tracking-widest uppercase mt-1">
+          Scholarship Applications Overview
         </p>
       </div>
 
-      {/* Chart */}
-      <div style={{ width: "100%", height: 350 }}>
+      <div className="relative w-full h-[360px]">
         <ResponsiveContainer>
           <PieChart>
             <Pie
@@ -52,65 +73,66 @@ const UniversityPieChart = ({ universityData = [] }) => {
               cy="50%"
               innerRadius={85}
               outerRadius={120}
-              paddingAngle={3}
+              paddingAngle={4}
               stroke="none"
+              label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
             >
               {pieChartData.map((entry, index) => (
                 <Cell
-                  key={`cell-${index}`}
+                  key={index}
                   fill={COLORS[index % COLORS.length]}
-                  className="transition-opacity duration-300 hover:opacity-80 cursor-pointer"
+                  className="cursor-pointer hover:opacity-80 transition-all"
                 />
               ))}
             </Pie>
 
-            {/* Clean Modern Tooltip */}
+            {/* Tooltip */}
             <Tooltip
               contentStyle={{
-                backgroundColor: "#ffffff",
-                borderRadius: "12px",
-                border: "1px solid #e5e7eb",
-                fontSize: "13px",
+                borderRadius: "14px",
+                border: "none",
+                background: "linear-gradient(135deg,#ffffff,#faf5ff)",
+                boxShadow: "0 10px 25px rgba(91,24,154,0.15)",
+                fontWeight: "600",
               }}
-              formatter={(value) => [`${value} Applications`, "Count"]}
             />
 
             <Legend
               verticalAlign="bottom"
               iconType="circle"
               wrapperStyle={{
+                fontSize: "12px",
+                fontWeight: "600",
                 paddingTop: "20px",
-                fontSize: "13px",
               }}
             />
           </PieChart>
         </ResponsiveContainer>
 
-        {/* Center Label Overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <p className="text-3xl font-bold text-primary">{totalApplications}</p>
-          <p className="text-xs uppercase tracking-widest text-base-content/50">
-            Total Applications
-          </p>
+          <p className="text-xs text-purple-400 font-bold uppercase">Total</p>
+          <h2 className="text-3xl font-black text-[#5a189a]">
+            {totalApplications}
+          </h2>
+          <p className="text-xs text-gray-400">Applications</p>
         </div>
       </div>
 
-      {/* Footer Summary */}
-      <div className="mt-8 pt-6 border-t border-primary/10 grid grid-cols-2 text-center">
+      <div className="mt-8 pt-6 border-t border-purple-100 grid grid-cols-2 text-center">
         <div>
-          <p className="text-xs uppercase tracking-widest text-base-content/40">
+          <p className="text-[11px] uppercase tracking-widest text-purple-400 font-bold">
             Universities
           </p>
-          <p className="text-xl font-semibold text-base-content">
+          <p className="text-xl font-black text-[#5a189a]">
             {universityData.length}
           </p>
         </div>
 
         <div>
-          <p className="text-xs uppercase tracking-widest text-base-content/40">
-            Leading University
+          <p className="text-[11px] uppercase tracking-widest text-purple-400 font-bold">
+            Top University
           </p>
-          <p className="text-xl font-semibold text-primary truncate">
+          <p className="text-lg font-black text-[#8b3fd6] truncate">
             {topUniversity}
           </p>
         </div>

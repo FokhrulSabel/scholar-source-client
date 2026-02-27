@@ -1,323 +1,142 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useNavigate, useParams } from "react-router";
-import { toast, ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 const EditScholarship = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const navigate = useNavigate();
-  // react form
+
   const { register, handleSubmit, reset } = useForm();
-  // data fetching
-  const { data: scholarship = [], isSuccess } = useQuery({
-    queryKey: ["singleScholarship", id],
+
+  const { data: scholarship, isSuccess } = useQuery({
+    queryKey: ["scholarship", id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/scholarships/${id}`);
       return res.data;
     },
   });
-  // store the scholarship value as a default on form data with reset method and avoid _id
+
   useEffect(() => {
-    if (isSuccess && scholarship) {
+    if (isSuccess) {
       const { _id, ...rest } = scholarship;
       reset(rest);
     }
-  }, [isSuccess, scholarship, reset]);
-  // destracturing the scholarship data
-  const {
-    scholarshipName,
-    universityName,
-    universityImage,
-    universityCountry,
-    universityCity,
-    universityWorldRank,
-    subjectCategory,
-    scholarshipCategory,
-    degree,
-    tuitionFees,
-    applicationFees,
-    serviceCharge,
-    applicationDeadline,
-  } = scholarship;
+  }, [scholarship, isSuccess, reset]);
 
-  const handleEditScholarship = async (data) => {
-    // console.log(data);
+  const onSubmit = async (data) => {
+    data.tuitionFees = Number(data.tuitionFees);
+    data.applicationFees = Number(data.applicationFees);
+    data.serviceCharge = Number(data.serviceCharge);
+
     const res = await axiosSecure.put(`/scholarships/${id}`, data);
 
     if (res.data.success) {
-      toast.success("Scholarship Updated Successfully!");
+      Swal.fire({
+        icon: "success",
+        title: "Updated Successfully",
+        confirmButtonColor: "#8b3fd6",
+      });
+
       navigate("/dashboard/manage-scholarship");
     }
   };
 
   return (
-    <div className="container mx-auto p-6 md:p-10 bg-gray-50 min-h-screen">
-      <ToastContainer></ToastContainer>
-      {/* Header */}
-      <header className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-center mb-2">
+    <div className="min-h-screen p-8 bg-purple-50">
+      <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-10">
+        <h2 className="text-3xl font-bold text-[#5a189a] mb-8">
           Edit Scholarship
-        </h1>
-        <p className="text-center text-gray-600 mb-8">
-          Fill the form below to publish a new scholarship opportunity.
-        </p>
-      </header>
+        </h2>
 
-      {/* Main Form Card */}
-      <div className="bg-white shadow-xl rounded-2xl p-8 border border-gray-100 max-w-4xl mx-auto">
-        <form onSubmit={handleSubmit(handleEditScholarship)}>
-          {/* Program Identification */}
-          <section className="mb-8 p-6 border-b border-gray-200">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Scholarship Name */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Scholarship Name
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  defaultValue={scholarshipName}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("scholarshipName")}
-                />
-              </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid md:grid-cols-2 gap-6"
+        >
+          <input
+            {...register("scholarshipName")}
+            placeholder="Scholarship Name"
+            className="input-style"
+          />
 
-              {/* University Name */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    University Name
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  defaultValue={universityName}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("universityName")}
-                />
-              </div>
+          <input
+            {...register("universityName")}
+            placeholder="University Name"
+            className="input-style"
+          />
 
-              {/* Image URL */}
-              <div className="form-control md:col-span-2">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Image URL
-                  </span>
-                </label>
-                <input
-                  type="url"
-                  defaultValue={universityImage}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("image")}
-                />
-              </div>
-            </div>
-          </section>
+          <input
+            {...register("universityImage")}
+            placeholder="University Image URL"
+            className="input-style md:col-span-2"
+          />
 
-          {/* Academic & Geographic Details */}
-          <section className="mb-8 p-6 border-b border-gray-200">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Country */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Country
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  defaultValue={universityCountry}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("country")}
-                />
-              </div>
+          <input
+            {...register("universityCountry")}
+            placeholder="Country"
+            className="input-style"
+          />
 
-              {/* City */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    City
-                  </span>
-                </label>
-                <input
-                  type="text"
-                  defaultValue={universityCity}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("city")}
-                />
-              </div>
+          <input
+            {...register("universityCity")}
+            placeholder="City"
+            className="input-style"
+          />
 
-              {/* World Rank */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    World Rank
-                  </span>
-                </label>
-                <input
-                  type="number"
-                  min="1"
-                  defaultValue={universityWorldRank}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("worldRank")}
-                />
-              </div>
+          <input
+            type="number"
+            {...register("universityWorldRank")}
+            placeholder="World Rank"
+            className="input-style"
+          />
 
-              {/* Subject Category */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Subject Category
-                  </span>
-                </label>
-                <select
-                  defaultValue={subjectCategory}
-                  className="select select-bordered w-full shadow-sm"
-                  {...register("subjectCategory")}
-                >
-                  <option>STEM</option>
-                  <option>General</option>
-                  <option>Engineering</option>
-                  <option>Arts</option>
-                  <option>Business</option>
-                  <option>Agriculture</option>
-                  <option>Medical</option>
-                  <option>Science</option>
-                  <option>Journalism</option>
-                  <option>Environment</option>
-                  <option>Entrepreneurship</option>
-                </select>
-              </div>
+          <input
+            type="number"
+            {...register("tuitionFees")}
+            placeholder="Tuition Fees"
+            className="input-style"
+          />
 
-              {/* Degree */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Degree Level
-                  </span>
-                </label>
-                <select
-                  defaultValue={degree}
-                  className="select select-bordered w-full shadow-sm"
-                  {...register("degree")}
-                >
-                  <option>Undergraduate</option>
-                  <option>Graduate (Master's)</option>
-                  <option>Post-Doctoral (PhD)</option>
-                  <option>High School</option>
-                </select>
-              </div>
+          <input
+            type="number"
+            {...register("applicationFees")}
+            placeholder="Application Fees"
+            className="input-style"
+          />
 
-              {/* Scholarship Category */}
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Funding Type
-                  </span>
-                </label>
-                <select
-                  defaultValue={scholarshipCategory}
-                  className="select select-bordered w-full shadow-sm"
-                  {...register("scholarshipCategory")}
-                >
-                  <option>Full Funded</option>
-                  <option>Partially Funded</option>
-                  <option>Tuition Waiver</option>
-                  <option>Research Grant</option>
-                </select>
-              </div>
-            </div>
-          </section>
+          <input
+            type="number"
+            {...register("serviceCharge")}
+            placeholder="Service Charge"
+            className="input-style"
+          />
 
-          {/* Financial & Dates */}
-          <section className="mb-10 p-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Tuition Fees ($)
-                  </span>
-                </label>
-                <input
-                  type="number"
-                  defaultValue={tuitionFees}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("tuitionFees")}
-                />
-              </div>
+          <input
+            type="date"
+            {...register("applicationDeadline")}
+            className="input-style md:col-span-2"
+          />
 
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Application Fees ($)
-                  </span>
-                </label>
-                <input
-                  type="number"
-                  defaultValue={applicationFees}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("applicationFees")}
-                />
-              </div>
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Service Charge ($)
-                  </span>
-                </label>
-                <input
-                  type="number"
-                  defaultValue={serviceCharge}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("serviceCharge")}
-                />
-              </div>
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Post Date
-                  </span>
-                </label>
-                <input
-                  type="date"
-                  className="input input-bordered w-full shadow-sm bg-gray-100"
-                  readOnly
-                  {...register("postDate")}
-                />
-              </div>
-
-              <div className="form-control md:col-span-4">
-                <label className="label">
-                  <span className="label-text font-semibold text-gray-700">
-                    Application Deadline
-                  </span>
-                </label>
-                <input
-                  type="date"
-                  defaultValue={applicationDeadline}
-                  className="input input-bordered w-full shadow-sm"
-                  {...register("deadline")}
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* Submit Button */}
-          <div className="mt-8 pt-6 border-t border-gray-200 text-center">
-            <button
-              type="submit"
-              className="btn btn-md btn-primary text-white px-12 shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-300 font-bold"
-            >
-              Edit Scholarship
-            </button>
-          </div>
+          <button
+            className="
+            md:col-span-2
+            py-4
+            rounded-xl
+            text-white
+            font-semibold
+            bg-gradient-to-r
+            from-[#d19ef1]
+            via-[#8b3fd6]
+            to-[#5a189a]
+            hover:scale-[1.02]
+            transition
+          "
+          >
+            Update Scholarship
+          </button>
         </form>
       </div>
     </div>

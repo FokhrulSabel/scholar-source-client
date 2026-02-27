@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-
 import Swal from "sweetalert2";
 import { GraduationCap } from "lucide-react";
 import useAuth from "../../../hooks/useAuth";
@@ -13,30 +12,13 @@ const AddScholarship = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      scholarshipName: "",
-      universityName: "",
-      universityImage: "",
-      universityCountry: "",
-      universityCity: "",
-      universityWorldRank: 1,
-      subjectCategory: "STEM",
-      scholarshipCategory: "Full Funded",
-      degree: "Undergraduate",
-      tuitionFees: 0,
-      applicationFees: 0,
-      serviceCharge: 0,
-      applicationDeadline: "",
-      scholarshipPostDate: new Date().toISOString().split("T")[0],
-      postedUserEmail: "",
-    },
-  });
+  } = useForm();
 
   const onSubmit = async (data) => {
     try {
-      const submissionData = {
+      const scholarshipData = {
         ...data,
         universityWorldRank: Number(data.universityWorldRank),
         tuitionFees: Number(data.tuitionFees),
@@ -45,199 +27,171 @@ const AddScholarship = () => {
         postedUserEmail: user?.email,
       };
 
-      const res = await axiosSecure.post("/scholarships", submissionData);
+      const res = await axiosSecure.post("/scholarships", scholarshipData);
 
       if (res.data.insertedId) {
         Swal.fire({
           icon: "success",
-          title: "Scholarship Published",
-          text: "The scholarship has been successfully added.",
-          confirmButtonColor: "#111827",
+          title: "Scholarship Added Successfully",
         });
+
+        reset();
       }
-    } catch (error) {
-      console.error("Error creating scholarship:", error);
+    } catch (err) {
+      Swal.fire("Error", err.message, "error");
     }
   };
 
+  const input = "input input-bordered w-full rounded-xl bg-base-100";
+
+  const select = "select select-bordered w-full rounded-xl";
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 px-4 md:px-10 py-10">
+    <div className="max-w-7xl mx-auto p-6">
       {/* Header */}
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-black text-white shadow-lg mb-4">
-          <GraduationCap size={28} />
-        </div>
-        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
-          Add New Scholarship
-        </h1>
-        <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-          Create and publish a new scholarship opportunity for students
-          worldwide.
+      <div className="text-center mb-10">
+        <GraduationCap size={40} className="mx-auto mb-3 text-primary" />
+        <h2 className="text-4xl font-bold">Add Scholarship</h2>
+        <p className="text-gray-500">
+          Publish scholarship opportunities worldwide
         </p>
       </div>
 
-      {/* Form Card */}
-      <div className="max-w-6xl mx-auto bg-white/80 backdrop-blur-xl border border-gray-200 rounded-3xl shadow-2xl p-8 md:p-14">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-14">
-          {/* -------------------- Program Details -------------------- */}
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-8 border-b pb-3">
-              Program Details
-            </h2>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-base-100 shadow-xl rounded-3xl p-10 space-y-12"
+      >
+        {/* ================= Scholarship Info ================= */}
+        <section>
+          <h3 className="font-semibold text-xl mb-6">
+            Scholarship Information
+          </h3>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Scholarship Name */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-2">
-                  Scholarship Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Global Excellence Scholarship"
-                  className={`w-full h-12 px-4 rounded-xl border bg-gray-50 focus:ring-2 focus:ring-black focus:outline-none transition ${
-                    errors.scholarshipName
-                      ? "border-red-500"
-                      : "border-gray-200"
-                  }`}
-                  {...register("scholarshipName", {
-                    required: "Scholarship name is required",
-                  })}
-                />
-              </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <input
+              placeholder="Scholarship Name"
+              className={input}
+              {...register("scholarshipName", {
+                required: true,
+              })}
+            />
 
-              {/* University Name */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-2">
-                  University Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Oxford University"
-                  className={`w-full h-12 px-4 rounded-xl border bg-gray-50 focus:ring-2 focus:ring-black focus:outline-none transition ${
-                    errors.universityName ? "border-red-500" : "border-gray-200"
-                  }`}
-                  {...register("universityName", {
-                    required: "University name is required",
-                  })}
-                />
-              </div>
-
-              {/* Image URL */}
-              <div className="md:col-span-2">
-                <label className="block text-sm font-semibold text-gray-600 mb-2">
-                  University Image URL
-                </label>
-                <input
-                  type="url"
-                  placeholder="https://example.com/image.jpg"
-                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black focus:outline-none transition"
-                  {...register("universityImage")}
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* -------------------- Eligibility -------------------- */}
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-8 border-b pb-3">
-              Eligibility & Location
-            </h2>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-2">
-                  Country
-                </label>
-                <input
-                  type="text"
-                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
-                  {...register("universityCountry", { required: true })}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-2">
-                  Subject Category
-                </label>
-                <select
-                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
-                  {...register("subjectCategory", { required: true })}
-                >
-                  <option>STEM</option>
-                  <option>Arts & Humanities</option>
-                  <option>Business & Law</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-2">
-                  Degree Level
-                </label>
-                <select
-                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
-                  {...register("degree", { required: true })}
-                >
-                  <option>Undergraduate</option>
-                  <option>Master's</option>
-                  <option>PhD</option>
-                </select>
-              </div>
-            </div>
-          </section>
-
-          {/* -------------------- Financial Details -------------------- */}
-          <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-8 border-b pb-3">
-              Financial Details
-            </h2>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-2">
-                  Application Fee
-                </label>
-                <input
-                  type="number"
-                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
-                  {...register("applicationFees")}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-2">
-                  Service Charge
-                </label>
-                <input
-                  type="number"
-                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
-                  {...register("serviceCharge")}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-600 mb-2">
-                  Application Deadline
-                </label>
-                <input
-                  type="date"
-                  className="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-black"
-                  {...register("applicationDeadline", { required: true })}
-                />
-              </div>
-            </div>
-          </section>
-
-          {/* Submit Button */}
-          <div className="text-center pt-6">
-            <button
-              type="submit"
-              className="px-10 py-4 rounded-2xl bg-black text-white font-semibold text-lg hover:opacity-90 active:scale-95 transition-all shadow-lg"
-            >
-              Publish Scholarship
-            </button>
+            <select className={select} {...register("scholarshipCategory")}>
+              <option>Full Funded</option>
+              <option>Partial Funded</option>
+              <option>Self Funded</option>
+            </select>
           </div>
-        </form>
-      </div>
+        </section>
+
+        {/* ================= University ================= */}
+        <section>
+          <h3 className="font-semibold text-xl mb-6">University Information</h3>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <input
+              placeholder="University Name"
+              className={input}
+              {...register("universityName", {
+                required: true,
+              })}
+            />
+
+            <input
+              placeholder="Country"
+              className={input}
+              {...register("universityCountry")}
+            />
+
+            <input
+              placeholder="City"
+              className={input}
+              {...register("universityCity")}
+            />
+
+            <input
+              type="number"
+              placeholder="World Rank"
+              className={input}
+              {...register("universityWorldRank")}
+            />
+
+            <input
+              placeholder="University Image URL"
+              className="md:col-span-2 input input-bordered w-full rounded-xl"
+              {...register("universityImage")}
+            />
+          </div>
+        </section>
+
+        {/* ================= Academic ================= */}
+        <section>
+          <h3 className="font-semibold text-xl mb-6">Academic Details</h3>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <select className={select} {...register("degree")}>
+              <option>Undergraduate</option>
+              <option>Masters</option>
+              <option>PhD</option>
+            </select>
+
+            <select className={select} {...register("subjectCategory")}>
+              <option>STEM</option>
+              <option>Business</option>
+              <option>Arts</option>
+              <option>Medical</option>
+            </select>
+          </div>
+        </section>
+
+        {/* ================= Financial ================= */}
+        <section>
+          <h3 className="font-semibold text-xl mb-6">Financial Information</h3>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <input
+              type="number"
+              placeholder="Tuition Fees"
+              className={input}
+              {...register("tuitionFees")}
+            />
+
+            <input
+              type="number"
+              placeholder="Application Fees"
+              className={input}
+              {...register("applicationFees")}
+            />
+
+            <input
+              type="number"
+              placeholder="Service Charge"
+              className={input}
+              {...register("serviceCharge")}
+            />
+          </div>
+        </section>
+
+        {/* ================= Deadline ================= */}
+        <section>
+          <h3 className="font-semibold text-xl mb-6">Application Deadline</h3>
+
+          <input
+            type="date"
+            className={input}
+            {...register("applicationDeadline", {
+              required: true,
+            })}
+          />
+        </section>
+
+        {/* Submit */}
+        <div className="text-center">
+          <button className="btn btn-primary px-10 rounded-xl text-lg">
+            Publish Scholarship
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
