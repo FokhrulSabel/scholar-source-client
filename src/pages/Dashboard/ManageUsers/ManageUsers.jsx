@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { FaUserShield } from "react-icons/fa";
@@ -10,14 +10,15 @@ import Loader from "../../../components/Loader/Loader";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
+  const [role, setRole] = useState("");
   const {
     refetch,
     isLoading,
     data: users = [],
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", role],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users`);
+      const res = await axiosSecure.get(`/users?role=${role}`);
       return res.data.users;
     },
   });
@@ -29,7 +30,7 @@ const ManageUsers = () => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#8b3fd6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, confirm it!",
     });
@@ -37,7 +38,7 @@ const ManageUsers = () => {
     if (!result.isConfirmed) return;
 
     try {
-      const res = await axiosSecure.patch(`/users/${user._id}`, userInfo);
+      const res = await axiosSecure.patch(`/users/${user._id}/role`, userInfo);
 
       if (res.data?.result?.modifiedCount > 0) {
         Swal.fire({
@@ -76,6 +77,13 @@ const ManageUsers = () => {
   const handleSetStudent = (user) => {
     UserRole(user, "student");
   };
+
+  
+  const resetFilters = () => {
+    setRole("");
+    
+  };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -83,6 +91,37 @@ const ManageUsers = () => {
   return (
     <div>
       <h2 className="text-4xl">Manage Users {users?.length}</h2>
+      <div className="flex justify-end items-center w-full px-4 my-6">
+        <div className="flex items-center gap-3 bg-base-100 p-2 rounded-2xl shadow-sm border border-base-200">
+          <label className="text-sm font-semibold text-gray-500 ml-2">
+            Filtering By:
+          </label>
+
+          {/* Improved Select Dropdown */}
+          <div className="relative">
+            <select
+              onChange={(e) => setRole(e.target.value)}
+              className="select select-bordered select-sm h-10 w-44 rounded-xl border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer font-medium"
+              defaultValue="User Role"
+            >
+              <option disabled>User Role</option>
+              {/* <option value="User Role">All Users</option> */}
+              <option value="admin">Admin</option>
+              <option value="moderator">Moderator</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
+          {/* Reset */}
+          <div className="mt-4 text-right">
+            <button
+              onClick={resetFilters}
+              className="text-sm font-medium text-gray-500 hover:text-gray-900 transition"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+      </div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -104,17 +143,13 @@ const ManageUsers = () => {
                     <div className="avatar">
                       <div className="mask mask-squircle h-12 w-12">
                         <img
-                          src={
-                            user.photoURL ||
-                            "https://i.ibb.co.com/YYFMjfV/test-Img.jpg"
-                          }
+                          src={user.photoURL || "https://ibb.co.com/MkGfYPQq"}
                           alt="Avatar Tailwind CSS Component"
                         />
                       </div>
                     </div>
                     <div>
                       <div className="font-bold">{user.displayName}</div>
-                      {/* <div className="text-sm opacity-50">United States</div> */}
                     </div>
                   </div>
                 </td>
