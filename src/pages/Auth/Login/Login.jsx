@@ -24,7 +24,39 @@ const Login = () => {
       // Optional: store token if you are not using axios interceptor
       // localStorage.setItem("access-token", idToken);
 
-      navigate(location.state || "/");
+      const from = location.state?.from?.pathname || "/";
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const DEMO_USERS = {
+    student: {
+      email: "student001@gmail.com",
+      password: "Student@12345",
+    },
+    moderator: {
+      email: "moderator002@gmail.com",
+      password: "Moderator@12345",
+    },
+    admin: {
+      email: "admin003@gmail.com",
+      password: "Admin@12345",
+    },
+  };
+
+  const handleDemoLogin = async (role) => {
+    try {
+      const demoUser = DEMO_USERS[role];
+
+      const res = await signInUser(demoUser.email, demoUser.password);
+
+      const user = res.user;
+      await user.getIdToken();
+
+      const from = location.state?.from?.pathname || "/";
+      navigate(from, { replace: true });
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +120,7 @@ const Login = () => {
               <SocialLogin></SocialLogin>
 
               <p className="text-md font-semibold text-center my-1.5">
-                Dont’t Have An Account ?{" "}
+                Don't have an account?{" "}
                 <Link
                   state={location?.state}
                   className="text-primary"
@@ -97,6 +129,34 @@ const Login = () => {
                   Register
                 </Link>{" "}
               </p>
+
+              <div className="divider">Demo Access</div>
+
+              <div className="space-y-2">
+                <button
+                  type="button"
+                  onClick={() => handleDemoLogin("student")}
+                  className="btn btn-outline w-full"
+                >
+                  Login as Student
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleDemoLogin("moderator")}
+                  className="btn btn-outline w-full"
+                >
+                  Login as Moderator
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleDemoLogin("admin")}
+                  className="btn btn-outline w-full"
+                >
+                  Login as Admin
+                </button>
+              </div>
             </form>
           </fieldset>
         </div>

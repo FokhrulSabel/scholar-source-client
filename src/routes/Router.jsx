@@ -11,7 +11,7 @@ import AddScholarship from "../pages/Dashboard/AddScholarship/AddScholarship";
 import AllScholarships from "../pages/Scholarships/AllScholarships/AllScholarships";
 import ManageScholarships from "../pages/Dashboard/ManageScholarships/ManageScholarships";
 import EditScholarship from "../pages/Dashboard/EditScholarship/EditScholarship";
-import ScholarshipDetails from "../pages/Scholarships/ScholarShipDetails/ScholarShipDetails";
+import ScholarshipDetails from "../pages/Scholarships/ScholarshipDetails/ScholarshipDetails";
 import Payment from "../pages/Payments/Payment";
 import PaymentSuccess from "../pages/Payments/PaymentSuccess";
 import PaymentFailed from "../pages/Payments/PaymentFailed";

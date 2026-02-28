@@ -103,7 +103,7 @@ const Payment = () => {
             Please Login First
           </h2>
           <Link
-            to="/auth/login"
+            to="/login"
             className="mt-5 inline-block w-full py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-[#d19ef1] via-[#8b3fd6] to-[#5a189a]"
           >
             Login

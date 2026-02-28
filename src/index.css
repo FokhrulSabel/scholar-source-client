@@ -1,8 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif;
+}
+
 @import "tailwindcss";
 @plugin "daisyui";
 
 @plugin "daisyui/theme" {
-  name: "scholarsource-light";
+  name: "light";
   default: true;
 
   --color-primary: #8b3fd6;
@@ -17,8 +23,9 @@
   --base-content: #2a1458;
 }
 
+
 @plugin "daisyui/theme" {
-  name: "scholarsource-dark";
+  name: "dark";
 
   --color-primary: #d19ef1;
   --color-secondary: #8b3fd6;
@@ -32,19 +39,9 @@
   --base-content: #f3e8ff;
 }
 
-.input-style {
-  @apply w-full h-12 px-4 rounded-xl border border-purple-200
-  focus:ring-2 focus:ring-[#8b3fd6]
-  focus:outline-none bg-gray-50;
-}
 
 @custom-variant dark (&:where([data-theme=scholarsource-dark], [data-theme=scholarsource-dark] *));
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
-
-* {
-  font-family: "Poppins", sans-serif;
-}
 
 a.active {
   @apply text-primary font-semibold relative transition-all duration-300;

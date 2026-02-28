@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { Link, useParams } from "react-router";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
 import useAxios from "../../../hooks/useAxios";
 import Loader from "../../../components/Loader/Loader";
 import {
@@ -11,10 +11,27 @@ import {
   FaUniversity,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
+import useAuth from "../../../hooks/useAuth";
 
 const ScholarshipDetails = () => {
   const { id } = useParams();
   const axiosInstance = useAxios();
+
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Redirect to login if not authenticated
+  const handleApply = () => {
+    if (!user) {
+      navigate("/login", {
+        state: { from: location },
+      });
+      return;
+    }
+
+    navigate(`/payment/${_id}`);
+  };
 
   // Scholarship fetching
   const { data: scholarship = [], isLoading: scholarshipLoading } = useQuery({
@@ -139,14 +156,14 @@ const ScholarshipDetails = () => {
                   </p>
                 </div>
 
-                <Link
-                  to={`/payment/${_id}`}
+                <button
+                  onClick={handleApply}
                   className="btn btn-lg rounded-2xl px-10 text-white border-none 
                   bg-gradient-to-r from-[#d19ef1] via-[#8b3fd6] to-[#5a189a]
                   shadow-lg shadow-[#8b3fd6]/30 hover:scale-105 hover:opacity-90 transition-all duration-300"
                 >
                   Apply Now
-                </Link>
+                </button>
               </div>
             </div>
           </div>

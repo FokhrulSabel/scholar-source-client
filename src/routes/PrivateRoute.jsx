@@ -6,14 +6,17 @@ import Loader from "../components/Loader/Loader";
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
+
   if (loading) {
-    return <Loader></Loader>;
+    return <Loader />;
   }
+
   if (user && user?.email) {
     return children;
-  } else {
-    return <Navigate state={location?.pathname} to="/login"></Navigate>;
   }
+
+  // redirect + save previous route
+  return <Navigate to="/login" state={{ from: location }} replace />;
 };
 
 export default PrivateRoute;
