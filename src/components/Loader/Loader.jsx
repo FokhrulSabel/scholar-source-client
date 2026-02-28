@@ -1,18 +1,20 @@
 import React from "react";
+import { PiGraduationCapLight } from "react-icons/pi";
 
-const Loader = ({ fullScreen = true }) => {
+const Loader = () => {
   return (
-    <div
-      className={`${
-        fullScreen ? "min-h-screen" : "h-40"
-      } flex flex-col justify-center items-center gap-4`}
-    >
-      {/* Spinner */}
-      <span className="loading loading-spinner loading-lg text-primary"></span>
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-base-100">
+      <div className="relative h-14 w-14">
+        <div className="absolute inset-0 rounded-full border-4 border-primary/20"></div>
+        <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
 
-      {/* Loading Text */}
-      <p className="text-lg font-semibold animate-pulse">
-        Loading<span className="ml-1">...</span>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <PiGraduationCapLight className="text-primary text-3xl animate-pulse" />
+        </div>
+      </div>
+
+      <p className="mt-4 text-sm font-semibold text-base-content animate-pulse">
+        Loading...
       </p>
     </div>
   );

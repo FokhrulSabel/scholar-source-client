@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router";
 import useAxios from "../../../hooks/useAxios";
-import Loader from "../../../components/Loader/Loader";
+
 import {
   FaAward,
   FaCalendarAlt,
@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import useAuth from "../../../hooks/useAuth";
+import CardSkeleton from "../../../components/ui/skeleton/CardSkeleton";
 
 const ScholarshipDetails = () => {
   const { id } = useParams();
@@ -70,7 +71,7 @@ const ScholarshipDetails = () => {
   } = scholarship;
 
   if (scholarshipLoading || reviewLoading) {
-    return <Loader />;
+    return <CardSkeleton />;
   }
 
   return (

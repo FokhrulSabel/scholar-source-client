@@ -23,7 +23,6 @@
   --base-content: #2a1458;
 }
 
-
 @plugin "daisyui/theme" {
   name: "dark";
 
@@ -39,9 +38,7 @@
   --base-content: #f3e8ff;
 }
 
-
-@custom-variant dark (&:where([data-theme=scholarsource-dark], [data-theme=scholarsource-dark] *));
-
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 a.active {
   @apply text-primary font-semibold relative transition-all duration-300;
@@ -55,4 +52,31 @@ a.active::after {
 a:not(.active)::after {
   content: "";
   @apply absolute left-0 bottom-0 w-full h-[2px] bg-transparent;
+}
+
+/* ===============================
+   Scrollbar (Modern Look)
+================================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: theme("colors.base-200");
+}
+
+::-webkit-scrollbar-thumb {
+  background: theme("colors.primary");
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: theme("colors.secondary");
+}
+
+/* ===============================
+   Smooth Transition Between Themes
+================================= */
+* {
+  @apply transition-colors duration-200;
 }

@@ -3,8 +3,9 @@ import React from "react";
 import useAxios from "../../../hooks/useAxios";
 import ScholarshipCard from "../../ui/ScholarshipCard/ScholarshipCard";
 import { Link } from "react-router";
-import Loader from "../../Loader/Loader";
+
 import { motion } from "framer-motion";
+import CardSkeleton from "../../ui/skeleton/CardSkeleton";
 
 const containerVariants = {
   hidden: {},
@@ -30,7 +31,7 @@ const TopScholarships = () => {
 
   const scholarships = data?.scholarships || [];
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <CardSkeleton />;
 
   if (isError)
     return (

@@ -7,9 +7,9 @@ import {
   useTransform,
 } from "framer-motion";
 import { Search } from "lucide-react";
-import harvard from "../../../assets/harvard.jpg";
-import oxford from "../../../assets/oxford.jpg";
-import stanford from "../../../assets/stanford.jpg";
+import harvard from "../../../assets/harvard.webp";
+import oxford from "../../../assets/oxford.webp";
+import stanford from "../../../assets/stanford.webp";
 
 const typingWords = ["Future", "Excellence", "Opportunity", "Success"];
 
@@ -73,6 +73,7 @@ const Banner = () => {
           />
         </motion.div>
       </AnimatePresence>
+      
 
       {/* Academic  Overlay */}
       <div
@@ -100,7 +101,7 @@ const Banner = () => {
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
             <Link
-              to="/scholarships"
+              to="/all-scholarships"
               className="px-8 py-4 rounded-xl bg-primary text-white font-semibold shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2"
             >
               Search Scholarship

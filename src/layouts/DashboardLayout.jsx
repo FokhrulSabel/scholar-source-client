@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { FaRegFileAlt, FaUser, FaUserCircle } from "react-icons/fa";
 import { IoMdHome } from "react-icons/io";
 import { MdEditDocument, MdSchool } from "react-icons/md";
@@ -15,10 +15,20 @@ import useAuth from "../hooks/useAuth";
 import { CgProfile } from "react-icons/cg";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import Logo from "../components/ui/Logo/Logo";
+import DashboardStatSkeleton from "../components/ui/skeleton/DashboardStatSkeleton";
+// import Loader from "../components/Loader/Loader";
 
 const DashBoardLayout = () => {
-  const { role } = useRole();
+  const { role, isLoading } = useRole();
   const { user } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="p-8">
+        <DashboardStatSkeleton count={4} />
+      </div>
+    );
+  }
 
   const navStyle =
     "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200";
@@ -61,7 +71,9 @@ const DashBoardLayout = () => {
 
         <main className="p-8 bg-base-200/30 flex-grow">
           <div className="bg-base-100 rounded-2xl shadow-sm border border-base-200 p-6 min-h-[80vh]">
-            <Outlet />
+            <Suspense fallback={<DashboardStatSkeleton count={4} />}>
+              <Outlet />
+            </Suspense>
           </div>
         </main>
       </div>
@@ -186,29 +198,33 @@ const DashBoardLayout = () => {
             )}
 
             {/* Student */}
-            <p className="text-xs uppercase tracking-wider text-base-content/40 mt-6 px-3">
-              Student
-            </p>
+            {role === "student" && (
+              <>
+                <p className="text-xs uppercase tracking-wider text-base-content/40 mt-6 px-3">
+                  Student
+                </p>
 
-            <NavLink
-              to="/dashboard/my-applications"
-              className={({ isActive }) =>
-                `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
-              }
-            >
-              <FaRegFileAlt size={24} />
-              My Applications
-            </NavLink>
+                <NavLink
+                  to="/dashboard/my-applications"
+                  className={({ isActive }) =>
+                    `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+                  }
+                >
+                  <FaRegFileAlt size={24} />
+                  My Applications
+                </NavLink>
 
-            <NavLink
-              to="/dashboard/my-reviews"
-              className={({ isActive }) =>
-                `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
-              }
-            >
-              <RiMessageLine size={24} />
-              Reviews
-            </NavLink>
+                <NavLink
+                  to="/dashboard/my-reviews"
+                  className={({ isActive }) =>
+                    `${navStyle} ${isActive ? activeStyle : inactiveStyle}`
+                  }
+                >
+                  <RiMessageLine size={24} />
+                  Reviews
+                </NavLink>
+              </>
+            )}
           </ul>
 
           {/* Bottom User Card */}

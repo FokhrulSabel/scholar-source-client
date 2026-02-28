@@ -1,98 +1,129 @@
 import { createBrowserRouter } from "react-router";
+import { lazy } from "react";
+
 import MainLayout from "../layouts/MainLayout";
-import Home from "../pages/Home/Home";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AuthLayout from "../layouts/AuthLayout";
-import Login from "../pages/Auth/Login/Login";
-import Register from "../pages/Auth/Register/Register";
+
 import PrivateRoute from "./PrivateRoute";
-import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
-import AddScholarship from "../pages/Dashboard/AddScholarship/AddScholarship";
-import AllScholarships from "../pages/Scholarships/AllScholarships/AllScholarships";
-import ManageScholarships from "../pages/Dashboard/ManageScholarships/ManageScholarships";
-import EditScholarship from "../pages/Dashboard/EditScholarship/EditScholarship";
-import ScholarshipDetails from "../pages/Scholarships/ScholarshipDetails/ScholarshipDetails";
-import Payment from "../pages/Payments/Payment";
-import PaymentSuccess from "../pages/Payments/PaymentSuccess";
-import PaymentFailed from "../pages/Payments/PaymentFailed";
-import MyApplications from "../pages/Dashboard/MyApplications/MyApplications";
-import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
-import ManageApplications from "../pages/Dashboard/ManageApplications/ManageApplications";
-import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
-import ErrorPage from "../components/ErrorPage/ErrorPage";
-import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
-import DataAnalytics from "../pages/Dashboard/DataAnalytics/DataAnalytics";
-import AllReviews from "../pages/Dashboard/AllReviews/AllReviews";
 import AdminRoute from "./AdminRoute";
 import ModeratorRoute from "./ModeratorRoute";
+import ErrorPage from "../components/ErrorPage/ErrorPage";
+
+const Home = lazy(() => import("../pages/Home/Home"));
+const AllScholarships = lazy(
+  () => import("../pages/Scholarships/AllScholarships/AllScholarships"),
+);
+const ScholarshipDetails = lazy(
+  () => import("../pages/Scholarships/ScholarshipDetails/ScholarshipDetails"),
+);
+const Payment = lazy(() => import("../pages/Payments/Payment"));
+const PaymentSuccess = lazy(() => import("../pages/Payments/PaymentSuccess"));
+const PaymentFailed = lazy(() => import("../pages/Payments/PaymentFailed"));
+
+const Login = lazy(() => import("../pages/Auth/Login/Login"));
+const Register = lazy(() => import("../pages/Auth/Register/Register"));
+
+const DashboardHome = lazy(
+  () => import("../pages/Dashboard/DashboardHome/DashboardHome"),
+);
+const MyProfile = lazy(() => import("../pages/Dashboard/MyProfile/MyProfile"));
+const AddScholarship = lazy(
+  () => import("../pages/Dashboard/AddScholarship/AddScholarship"),
+);
+const EditScholarship = lazy(
+  () => import("../pages/Dashboard/EditScholarship/EditScholarship"),
+);
+const ManageScholarships = lazy(
+  () => import("../pages/Dashboard/ManageScholarships/ManageScholarships"),
+);
+const ManageUsers = lazy(
+  () => import("../pages/Dashboard/ManageUsers/ManageUsers"),
+);
+const DataAnalytics = lazy(
+  () => import("../pages/Dashboard/DataAnalytics/DataAnalytics"),
+);
+const ManageApplications = lazy(
+  () => import("../pages/Dashboard/ManageApplications/ManageApplications"),
+);
+const AllReviews = lazy(
+  () => import("../pages/Dashboard/AllReviews/AllReviews"),
+);
+const MyApplications = lazy(
+  () => import("../pages/Dashboard/MyApplications/MyApplications"),
+);
+const MyReviews = lazy(() => import("../pages/Dashboard/MyReviews/MyReviews"));
 
 const router = createBrowserRouter([
+  // MAIN PUBLIC ROUTES
+
   {
     path: "/",
     element: <MainLayout />,
-    errorElement: <ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage />,
     children: [
+      { index: true, Component: Home },
+      { path: "all-scholarships", Component: AllScholarships },
+      { path: "scholarships/:id", Component: ScholarshipDetails },
       {
-        index: true,
-        Component: Home,
+        path: "payment/:id",
+        element: (
+          <PrivateRoute>
+            <Payment></Payment>
+          </PrivateRoute>
+        ),
       },
       {
-        path: "/all-scholarships",
-        Component: AllScholarships,
+        path: "payment-success",
+        element: (
+          <PrivateRoute>
+            <PaymentSuccess></PaymentSuccess>
+          </PrivateRoute>
+        ),
       },
       {
-        path: "/scholarships/:id",
-        Component: ScholarshipDetails,
-      },
-      {
-        path: "/payment/:id",
-        Component: Payment,
-      },
-      {
-        path: "/payment-success",
-        Component: PaymentSuccess,
-      },
-      {
-        path: "/payment-failed",
-        Component: PaymentFailed,
+        path: "payment-failed",
+        element: (
+          <PrivateRoute>
+            <PaymentFailed></PaymentFailed>
+          </PrivateRoute>
+        ),
       },
     ],
   },
+
+  // AUTH ROUTES
+
   {
     path: "/",
-    Component: AuthLayout,
+    element: <AuthLayout />,
     children: [
-      {
-        path: "login",
-        Component: Login,
-      },
-      {
-        path: "register",
-        Component: Register,
-      },
+      { path: "login", Component: Login },
+      { path: "register", Component: Register },
     ],
   },
+
+  // DASHBOARD ROUTES
+
   {
     path: "/dashboard",
     element: (
       <PrivateRoute>
-        <DashboardLayout></DashboardLayout>
+        <DashboardLayout />
       </PrivateRoute>
     ),
     children: [
-      {
-        index: true,
-        Component: DashboardHome,
-      },
-      {
-        path: "my-profile",
-        Component: MyProfile,
-      },
+      { index: true, Component: DashboardHome },
+
+      { path: "my-profile", Component: MyProfile },
+
+      // ADMIN
+
       {
         path: "add-scholarship",
         element: (
           <AdminRoute>
-            <AddScholarship></AddScholarship>
+            <AddScholarship />
           </AdminRoute>
         ),
       },
@@ -100,7 +131,7 @@ const router = createBrowserRouter([
         path: "edit-scholarship/:id",
         element: (
           <AdminRoute>
-            <EditScholarship></EditScholarship>
+            <EditScholarship />
           </AdminRoute>
         ),
       },
@@ -108,7 +139,7 @@ const router = createBrowserRouter([
         path: "manage-scholarship",
         element: (
           <AdminRoute>
-            <ManageScholarships></ManageScholarships>
+            <ManageScholarships />
           </AdminRoute>
         ),
       },
@@ -116,7 +147,7 @@ const router = createBrowserRouter([
         path: "manage-users",
         element: (
           <AdminRoute>
-            <ManageUsers></ManageUsers>
+            <ManageUsers />
           </AdminRoute>
         ),
       },
@@ -124,37 +155,34 @@ const router = createBrowserRouter([
         path: "data-analytics",
         element: (
           <AdminRoute>
-            <DataAnalytics></DataAnalytics>
+            <DataAnalytics />
           </AdminRoute>
         ),
       },
+
+      // MODERATOR
 
       {
         path: "manage-applications",
         element: (
           <ModeratorRoute>
-            <ManageApplications></ManageApplications>
+            <ManageApplications />
           </ModeratorRoute>
         ),
       },
-
       {
         path: "all-reviews",
         element: (
           <ModeratorRoute>
-            <AllReviews></AllReviews>
+            <AllReviews />
           </ModeratorRoute>
         ),
       },
 
-      {
-        path: "my-applications",
-        Component: MyApplications,
-      },
-      {
-        path: "my-reviews",
-        Component: MyReviews,
-      },
+      // STUDENT
+
+      { path: "my-applications", Component: MyApplications },
+      { path: "my-reviews", Component: MyReviews },
     ],
   },
 ]);

@@ -116,7 +116,7 @@ const HowItWorks = () => {
         {/* CTA */}
         <div className="mt-20 text-center">
           <Link
-            to="/dashboard"
+            to="/all-scholarships"
             className="btn btn-primary btn-lg rounded-2xl px-12 font-bold shadow-xl shadow-primary/30"
           >
             Start Your Journey
