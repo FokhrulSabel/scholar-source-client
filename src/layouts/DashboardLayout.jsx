@@ -25,7 +25,7 @@ const DashBoardLayout = () => {
   if (isLoading) {
     return (
       <div className="p-8">
-        <DashboardStatSkeleton count={4} />
+        <DashboardStatSkeleton count={8} />
       </div>
     );
   }

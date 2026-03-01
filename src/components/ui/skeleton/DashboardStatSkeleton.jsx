@@ -1,7 +1,6 @@
-// DashboardStatSkeleton.jsx
 import React from "react";
 
-const DashboardStatSkeleton = ({ count = 4 }) => {
+const DashboardStatSkeleton = ({ count = 8 }) => {
   return (
     <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-6 animate-pulse">
       {Array.from({ length: count }).map((_, i) => (

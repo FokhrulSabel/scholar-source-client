@@ -1,9 +1,8 @@
-// CardSkeleton.jsx
 import React from "react";
 
-const CardSkeleton = ({ count = 6 }) => {
+const CardSkeleton = ({ count = 8 }) => {
   return (
-    <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6">
+    <div className="grid md:grid-cols-4 sm:grid-cols-2 gap-6">
       {Array.from({ length: count }).map((_, index) => (
         <div
           key={index}

@@ -56,6 +56,11 @@ const Navbar = () => {
           Scholarships
         </NavLink>
       </li>
+      <li>
+        <NavLink to="/about" className="nav-link">
+          About Us
+        </NavLink>
+      </li>
     </>
   );
   return (

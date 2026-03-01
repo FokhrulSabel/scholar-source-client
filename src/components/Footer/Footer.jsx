@@ -3,10 +3,10 @@ import { Link } from "react-router";
 import {
   GraduationCap,
   Facebook,
-  Twitter,
   Linkedin,
   Github,
 } from "lucide-react";
+import { FaXTwitter } from "react-icons/fa6";
 import Logo from "../ui/Logo/Logo";
 
 const Footer = () => {
@@ -39,15 +39,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/scholarships"
+                  to="/all-scholarships"
                   className="hover:text-primary transition"
                 >
                   Scholarships
-                </Link>
-              </li>
-              <li>
-                <Link to="/dashboard" className="hover:text-primary transition">
-                  Dashboard
                 </Link>
               </li>
               <li>
@@ -68,12 +63,12 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="hover:text-primary transition">
+                <Link to="/privacy-policy" className="hover:text-primary transition">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="hover:text-primary transition">
+                <Link to="/terms-of-service" className="hover:text-primary transition">
                   Terms of Service
                 </Link>
               </li>
@@ -86,28 +81,28 @@ const Footer = () => {
 
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://www.facebook.com/fokhrul.sabel.2024"
                 className="p-3 rounded-full bg-base-100 shadow hover:shadow-md hover:text-primary transition"
               >
                 <Facebook size={18} />
               </a>
 
               <a
-                href="#"
+                href="https://x.com/Fokhrul_Sabel?t=x6Kc8h3IpsnkKp_lH-0d6A&s=09"
                 className="p-3 rounded-full bg-base-100 shadow hover:shadow-md hover:text-primary transition"
               >
-                <Twitter size={18} />
+                <FaXTwitter size={18} />
               </a>
 
               <a
-                href="#"
+                href="https://www.linkedin.com/in/fokhrulsabel/"
                 className="p-3 rounded-full bg-base-100 shadow hover:shadow-md hover:text-primary transition"
               >
                 <Linkedin size={18} />
               </a>
 
               <a
-                href="#"
+                href="https://github.com/FokhrulSabel"
                 className="p-3 rounded-full bg-base-100 shadow hover:shadow-md hover:text-primary transition"
               >
                 <Github size={18} />

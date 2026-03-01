@@ -9,6 +9,10 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import ModeratorRoute from "./ModeratorRoute";
 import ErrorPage from "../components/ErrorPage/ErrorPage";
+import About from "../components/About/About";
+import PrivacyPolicy from "../components/Footer/PrivacyPolicy";
+import TermsOfService from "../components/Footer/TermsOfService";
+import Contact from "../components/Footer/Contact";
 
 const Home = lazy(() => import("../pages/Home/Home"));
 const AllScholarships = lazy(
@@ -65,6 +69,10 @@ const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: "all-scholarships", Component: AllScholarships },
       { path: "scholarships/:id", Component: ScholarshipDetails },
+      { path: "about", Component: About },
+      { path: "privacy-policy", Component: PrivacyPolicy },
+      { path: "terms-of-service", Component: TermsOfService },
+      { path: "contact", Component: Contact },
       {
         path: "payment/:id",
         element: (

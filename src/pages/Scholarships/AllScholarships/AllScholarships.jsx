@@ -18,7 +18,7 @@ const AllScholarships = () => {
   const [degree, setDegree] = useState("");
   const [sort, setSort] = useState("latest");
   const [page, setPage] = useState(1);
-  const limit = 6;
+  const limit = 8;
 
   // Debounce search input
   useEffect(() => {
@@ -194,7 +194,7 @@ const AllScholarships = () => {
         ) : (
           <>
             {/* Scholarships Grid */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {scholarships.map((item, index) => (
                 <motion.div
                   key={item._id}
