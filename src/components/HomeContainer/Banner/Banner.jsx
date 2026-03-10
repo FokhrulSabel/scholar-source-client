@@ -69,16 +69,14 @@ const Banner = () => {
           <img
             src={images[currentImage]}
             alt="Campus"
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         </motion.div>
       </AnimatePresence>
-      
 
       {/* Academic  Overlay */}
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-[#d19ef1]/80 via-[#8b3fd6]/70 to-[#5a189a]/80 -z-10"
-      />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#d19ef1]/80 via-[#8b3fd6]/70 to-[#5a189a]/80 -z-10" />
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-16 items-center relative z-10">

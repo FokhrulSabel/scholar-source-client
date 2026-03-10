@@ -9,7 +9,7 @@ const Button = ({
   to,
 }) => {
   const classes = `
-    flex items-center justify-center gap-2 px-6 py-3 rounded-lg
+    flex items-center justify-center gap-2 px-6 py-3 rounded-xl
     btn-gradient
     text-white font-semibold shadow-md
     hover:shadow-lg hover:scale-[1.02]

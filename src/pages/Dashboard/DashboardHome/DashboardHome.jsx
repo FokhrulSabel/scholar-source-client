@@ -84,7 +84,7 @@ const DashboardHome = () => {
         {/* Main Grid */}
         <div className="grid md:grid-cols-3 gap-6">
           {/* Account Overview Card */}
-          <div className="col-span-2 bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-sm transition">
+          <div className="col-span-2 bg-white border border-gray-200 rounded-xl p-8 hover:shadow-sm transition">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3 text-gray-700">
                 {current.icon}
@@ -121,7 +121,7 @@ const DashboardHome = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-sm transition flex flex-col justify-between">
+          <div className="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-sm transition flex flex-col justify-between">
             <div>
               <h2 className="text-lg font-semibold text-gray-800 mb-4">
                 Quick Actions
@@ -132,7 +132,7 @@ const DashboardHome = () => {
               </p>
             </div>
 
-            <button className="mt-8 flex items-center justify-center gap-2 bg-gray-900 text-white text-sm font-medium py-2.5 rounded-lg hover:bg-gray-800 transition">
+            <button className="mt-8 flex items-center justify-center gap-2 bg-gray-900 text-white text-sm font-medium py-2.5 rounded-xl hover:bg-gray-800 transition">
               <MdOutlineExplore size={18} />
               Explore Features
             </button>

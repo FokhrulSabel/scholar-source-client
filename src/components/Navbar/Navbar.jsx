@@ -61,6 +61,16 @@ const Navbar = () => {
           About Us
         </NavLink>
       </li>
+      <li>
+        <NavLink to="/blogs" className="nav-link">
+          Blogs
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/contact" className="nav-link">
+          Contact
+        </NavLink>
+      </li>
     </>
   );
   return (
@@ -97,7 +107,7 @@ const Navbar = () => {
                 />
               </svg>
             </div>
-            <ul className="menu menu-sm dropdown-content bg-base-100 rounded-2xl z-10 mt-3 w-52 p-3 shadow-2xl border border-base-200">
+            <ul className="menu menu-sm dropdown-content bg-base-100 rounded-xl z-10 mt-3 w-52 p-3 shadow-2xl border border-base-200">
               {links}
             </ul>
           </div>
@@ -121,13 +131,13 @@ const Navbar = () => {
               type="checkbox"
               checked={theme === "dark"}
             />
-            <svg
-              className="swap-off h-5 w-5 text-[#f59e0b]"
-              viewBox="0 0 24 24"
-            >
+            <svg className="swap-off h-5 w-5 fill-primary" viewBox="0 0 24 24">
               <path d="M12 4V2M12 22v-2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41M12 6.5A5.5 5.5 0 1017.5 12 5.5 5.5 0 0012 6.5z" />
             </svg>
-            <svg className="swap-on h-5 w-5 text-[#d19ef1]" viewBox="0 0 24 24">
+            <svg
+              className="swap-on h-5 w-5 fill-primary"
+              viewBox="0 0 24 24"
+            >
               <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
             </svg>
           </label>
@@ -151,7 +161,7 @@ const Navbar = () => {
                 </div>
               </div>
 
-              <ul className="dropdown-content menu p-3 shadow-2xl bg-base-100 rounded-2xl border border-base-200 z-[100] w-64 mt-4">
+              <ul className="dropdown-content menu p-3 shadow-2xl bg-base-100 rounded-xl border border-base-200 z-[100] w-64 mt-4">
                 <div className="px-4 py-3 mb-2 border-b border-base-200">
                   <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em]">
                     Account

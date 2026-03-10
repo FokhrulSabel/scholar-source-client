@@ -70,7 +70,7 @@ const DashBoardLayout = () => {
         </nav>
 
         <main className="p-8 bg-base-200/30 flex-grow">
-          <div className="bg-base-100 rounded-2xl shadow-sm border border-base-200 p-6 min-h-[80vh]">
+          <div className="bg-base-100 rounded-xl shadow-sm border border-base-200 p-6 min-h-[80vh]">
             <Suspense fallback={<DashboardStatSkeleton count={4} />}>
               <Outlet />
             </Suspense>
@@ -169,7 +169,7 @@ const DashBoardLayout = () => {
             )}
 
             {/* Moderator */}
-            {(role === "admin" || role === "moderator") && (
+            {role === "moderator" && (
               <>
                 <p className="text-xs uppercase tracking-wider text-base-content/40 mt-6 px-3">
                   Operations
@@ -229,7 +229,7 @@ const DashBoardLayout = () => {
 
           {/* Bottom User Card */}
           <div className="p-4 border-t border-base-200">
-            <div className="flex items-center gap-3 bg-base-200/60 rounded-2xl p-3">
+            <div className="flex items-center gap-3 bg-base-200/60 rounded-xl p-3">
               <div className="w-10 h-10 bg-primary/20 text-primary flex items-center justify-center rounded-xl font-semibold">
                 {role?.[0]?.toUpperCase()}
               </div>

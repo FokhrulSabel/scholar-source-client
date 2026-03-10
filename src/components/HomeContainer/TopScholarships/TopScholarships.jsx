@@ -31,7 +31,9 @@ const TopScholarships = () => {
 
   const scholarships = data?.scholarships || [];
 
-  if (isLoading) return <CardSkeleton />;
+  if (isLoading) {
+    return <CardSkeleton />;
+  }
 
   if (isError)
     return (

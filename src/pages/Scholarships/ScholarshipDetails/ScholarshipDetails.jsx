@@ -122,7 +122,7 @@ const ScholarshipDetails = () => {
               {/* University Info */}
               <div className="space-y-5 mb-10">
                 <div className="flex items-center gap-4 group">
-                  <div className="w-12 h-12 rounded-2xl bg-base-300 flex items-center justify-center group-hover:bg-[#8b3fd6]/20 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-base-300 flex items-center justify-center group-hover:bg-[#8b3fd6]/20 transition-colors">
                     <FaUniversity className="text-[#8b3fd6]" />
                   </div>
                   <div>
@@ -134,7 +134,7 @@ const ScholarshipDetails = () => {
                 </div>
 
                 <div className="flex items-center gap-4 group">
-                  <div className="w-12 h-12 rounded-2xl bg-base-300 flex items-center justify-center group-hover:bg-[#5a189a]/20 transition-colors">
+                  <div className="w-12 h-12 rounded-xl bg-base-300 flex items-center justify-center group-hover:bg-[#5a189a]/20 transition-colors">
                     <FaGlobe className="text-[#5a189a]" />
                   </div>
                   <div>
@@ -159,7 +159,7 @@ const ScholarshipDetails = () => {
 
                 <button
                   onClick={handleApply}
-                  className="btn btn-lg rounded-2xl px-10 text-white border-none 
+                  className="btn btn-lg rounded-xl px-10 text-white border-none 
                   bg-gradient-to-r from-[#d19ef1] via-[#8b3fd6] to-[#5a189a]
                   shadow-lg shadow-[#8b3fd6]/30 hover:scale-105 hover:opacity-90 transition-all duration-300"
                 >
@@ -198,7 +198,7 @@ const ScholarshipDetails = () => {
               key={i}
               className="bg-base-200 p-6 rounded-[2rem] shadow-lg border border-base-300 text-center hover:shadow-[#8b3fd6]/20 transition-all duration-300"
             >
-              <div className="mx-auto w-12 h-12 rounded-2xl bg-base-300 flex items-center justify-center text-xl mb-3 text-[#8b3fd6]">
+              <div className="mx-auto w-12 h-12 rounded-xl bg-base-300 flex items-center justify-center text-xl mb-3 text-[#8b3fd6]">
                 {item.icon}
               </div>
 
@@ -234,7 +234,7 @@ const ScholarshipDetails = () => {
               >
                 <div className="flex items-center gap-4 mb-6">
                   <div className="avatar">
-                    <div className="w-14 rounded-2xl ring-2 ring-[#8b3fd6] ring-offset-base-200 ring-offset-2">
+                    <div className="w-14 rounded-xl ring-2 ring-[#8b3fd6] ring-offset-base-200 ring-offset-2">
                       <img src={review.userImage} alt={review.userName} />
                     </div>
                   </div>

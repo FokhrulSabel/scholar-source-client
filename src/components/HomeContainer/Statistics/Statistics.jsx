@@ -86,7 +86,7 @@ const Statistics = () => {
               >
                 {/* Icon */}
                 <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center 
+                  className="w-16 h-16 rounded-xl flex items-center justify-center 
                                 bg-gradient-to-br from-[#8b3fd6]/20 to-[#5a189a]/20 
                                 text-[#5a189a] text-3xl mb-8 
                                 group-hover:scale-110 transition-transform duration-500"

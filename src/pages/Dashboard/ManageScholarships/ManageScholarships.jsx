@@ -56,7 +56,7 @@ const ManageScholarships = () => {
       <h2 className="text-3xl font-bold text-[#5a189a]">Manage Scholarships</h2>
 
       {/* Table */}
-      <div className="overflow-x-auto rounded-2xl border shadow-lg">
+      <div className="overflow-x-auto rounded-xl border shadow-lg">
         <table className="table">
           <thead className="bg-gradient-to-r from-[#d19ef1] to-[#8b3fd6] text-white">
             <tr>

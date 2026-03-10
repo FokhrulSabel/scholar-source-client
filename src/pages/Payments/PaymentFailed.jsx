@@ -66,7 +66,7 @@ const PaymentFailed = () => {
           </p>
 
           {scholarshipData && (
-            <div className="bg-base-100 rounded-2xl p-5 text-left mb-6 border border-base-300">
+            <div className="bg-base-100 rounded-xl p-5 text-left mb-6 border border-base-300">
               <p>
                 <span className="font-semibold">Scholarship:</span>{" "}
                 {scholarshipData.scholarshipName}

@@ -13,6 +13,7 @@ import About from "../components/About/About";
 import PrivacyPolicy from "../components/Footer/PrivacyPolicy";
 import TermsOfService from "../components/Footer/TermsOfService";
 import Contact from "../components/Footer/Contact";
+import Blogs from "../components/HomeContainer/Blogs/Blogs";
 
 const Home = lazy(() => import("../pages/Home/Home"));
 const AllScholarships = lazy(
@@ -70,6 +71,7 @@ const router = createBrowserRouter([
       { path: "all-scholarships", Component: AllScholarships },
       { path: "scholarships/:id", Component: ScholarshipDetails },
       { path: "about", Component: About },
+      { path: "blogs", Component: Blogs },
       { path: "privacy-policy", Component: PrivacyPolicy },
       { path: "terms-of-service", Component: TermsOfService },
       { path: "contact", Component: Contact },

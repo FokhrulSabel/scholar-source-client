@@ -12,7 +12,7 @@ const ModeratorRoute = ({ children }) => {
     return <Loader></Loader>;
   }
 
-  if (role !== "moderator" && role !== "admin") {
+  if (role !== "moderator") {
     return <Forbidden />;
   }
   return children;

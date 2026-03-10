@@ -1,11 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
+@import "tailwindcss";
+
+@plugin "daisyui";
+
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", system-ui, sans-serif;
+  @apply transition-colors duration-200;
 }
 
-@import "tailwindcss";
-@plugin "daisyui";
+html {
+  scroll-behavior: smooth;
+}
+
+/* DaisyUI Themes */
 
 @plugin "daisyui/theme" {
   name: "light";
@@ -38,45 +46,48 @@
   --base-content: #f3e8ff;
 }
 
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+/* Active Nav Link */
 
 a.active {
-  @apply text-primary font-semibold relative transition-all duration-300;
+  @apply text-primary font-semibold relative;
+}
+
+a::after {
+  content: "";
+  @apply absolute left-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-300;
 }
 
 a.active::after {
-  content: "";
-  @apply absolute left-0 bottom-0 w-full h-[2px] bg-primary rounded-full;
+  @apply w-full;
 }
 
-a:not(.active)::after {
-  content: "";
-  @apply absolute left-0 bottom-0 w-full h-[2px] bg-transparent;
-}
+/* Scrollbar */
 
-/* ===============================
-   Scrollbar (Modern Look)
-================================= */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: theme("colors.base-200");
+  background: var(--b2);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: theme("colors.primary");
+  background: var(--p);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: theme("colors.secondary");
+  background: var(--s);
 }
 
-/* ===============================
-   Smooth Transition Between Themes
-================================= */
-* {
-  @apply transition-colors duration-200;
+/* Layout container */
+
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 md:px-6 lg:px-8;
+}
+
+/* Skeleton loader */
+
+.skeleton-card {
+  @apply animate-pulse bg-base-200 rounded-xl;
 }

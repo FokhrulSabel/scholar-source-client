@@ -34,7 +34,7 @@ const MyProfile = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-base-200 p-4">
-      <div className="relative w-full max-w-md rounded-2xl bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
+      <div className="relative w-full max-w-md rounded-xl bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
         
         <div className="h-24 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent"></div>
 

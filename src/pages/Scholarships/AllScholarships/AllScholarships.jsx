@@ -52,7 +52,7 @@ const AllScholarships = () => {
         page,
       });
 
-      const res = await axiosInstance.get(`/all-scholarships?${params}`);
+      const res = await axiosInstance.get(`/all-scholarships?${params.toString()}`);
       return res.data;
     },
     keepPreviousData: true,
@@ -85,7 +85,7 @@ const AllScholarships = () => {
         </div>
 
         {/* Filter Bar */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-10 shadow-sm">
+        <div className="bg-white border border-gray-200 rounded-xl p-6 mb-10 shadow-sm">
           <div className="grid md:grid-cols-6 gap-4">
             {/* Search */}
             <div className="relative md:col-span-2">
@@ -99,21 +99,6 @@ const AllScholarships = () => {
               />
             </div>
 
-            {/* Subject */}
-            {/* <select
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-gray-900"
-            >
-              <option value="">All Subjects</option>
-              <option value="Artificial Intelligence">
-                Artificial Intelligence
-              </option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Data Science">Data Science</option>
-              <option value="Cyber Security">Cyber Security</option>
-              <option value="Software Engineering">Software Engineering</option>
-            </select> */}
 
             {/* Degree */}
             <select
@@ -186,7 +171,7 @@ const AllScholarships = () => {
             </p>
             <button
               onClick={resetFilters}
-              className="mt-6 bg-gray-900 text-white px-6 py-2 rounded-lg text-sm hover:bg-gray-800 transition"
+              className="mt-6 bg-gray-900 text-white px-6 py-2 rounded-xl text-sm hover:bg-gray-800 transition"
             >
               Clear Filters
             </button>
@@ -213,7 +198,7 @@ const AllScholarships = () => {
               <button
                 disabled={page === 1}
                 onClick={() => setPage(page - 1)}
-                className="px-3 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-40 hover:bg-gray-100"
+                className="px-3 py-2 rounded-xl border border-gray-200 text-sm disabled:opacity-40 hover:bg-gray-100"
               >
                 <GrPrevious />
               </button>
@@ -222,7 +207,7 @@ const AllScholarships = () => {
                 <button
                   key={num}
                   onClick={() => setPage(num + 1)}
-                  className={`px-4 py-2 rounded-lg text-sm border ${
+                  className={`px-4 py-2 rounded-xl text-sm border ${
                     page === num + 1
                       ? "bg-gray-900 text-white border-gray-900"
                       : "border-gray-200 hover:bg-gray-100"
@@ -235,7 +220,7 @@ const AllScholarships = () => {
               <button
                 disabled={page === totalPages}
                 onClick={() => setPage(page + 1)}
-                className="px-3 py-2 rounded-lg border border-gray-200 text-sm disabled:opacity-40 hover:bg-gray-100"
+                className="px-3 py-2 rounded-xl border border-gray-200 text-sm disabled:opacity-40 hover:bg-gray-100"
               >
                 <GrNext />
               </button>

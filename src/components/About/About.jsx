@@ -131,7 +131,7 @@ const About = () => {
                 whileHover={{ y: -8 }}
                 className="bg-base-100 p-10 rounded-3xl border border-base-300 shadow-lg hover:shadow-primary/20 transition-all"
               >
-                <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-xl bg-primary/10 text-primary">
                   {item.icon}
                 </div>
                 <h3 className="font-bold text-xl mb-3">{item.title}</h3>
@@ -162,7 +162,7 @@ const About = () => {
 
           <Link
             to="/all-scholarships"
-            className="btn bg-white text-primary border-none px-10 rounded-2xl font-bold hover:bg-base-200"
+            className="btn bg-white text-primary border-none px-10 rounded-xl font-bold hover:bg-base-200"
           >
             Explore Scholarships
             <ArrowRight className="ml-2" />

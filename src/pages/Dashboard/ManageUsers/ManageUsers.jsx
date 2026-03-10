@@ -92,7 +92,7 @@ const ManageUsers = () => {
     <div>
       <h2 className="text-4xl">Manage Users {users?.length}</h2>
       <div className="flex justify-end items-center w-full px-4 my-6">
-        <div className="flex items-center gap-3 bg-base-100 p-2 rounded-2xl shadow-sm border border-base-200">
+        <div className="flex items-center gap-3 bg-base-100 p-2 rounded-xl shadow-sm border border-base-200">
           <label className="text-sm font-semibold text-gray-500 ml-2">
             Filtering By:
           </label>

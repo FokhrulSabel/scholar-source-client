@@ -16,7 +16,7 @@ const PageSkeleton = () => {
             key={index}
             className="p-4 border border-base-300 rounded-xl space-y-4"
           >
-            <div className="h-40 bg-base-300 rounded-lg"></div>
+            <div className="h-40 bg-base-300 rounded-xl"></div>
             <div className="h-4 w-3/4 bg-base-300 rounded"></div>
             <div className="h-4 w-1/2 bg-base-300 rounded"></div>
             <div className="h-10 w-full bg-base-300 rounded"></div>

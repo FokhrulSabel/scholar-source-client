@@ -14,7 +14,7 @@ const StatCard = ({ title, subtitle, value, icon: Icon, prefix }) => {
     >
       <div className="flex items-center gap-6">
         {/* Icon */}
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#d19ef1] via-[#8b3fd6] to-[#5a189a] text-white flex items-center justify-center text-2xl shadow-lg shadow-primary/20">
+        <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#d19ef1] via-[#8b3fd6] to-[#5a189a] text-white flex items-center justify-center text-2xl shadow-lg shadow-primary/20">
           <Icon />
         </div>
 

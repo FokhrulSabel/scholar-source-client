@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaQuestionCircle, FaLifeRing } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const FAQ = () => {
   const [faqs, setFaqs] = useState([]);
@@ -91,7 +92,7 @@ const FAQ = () => {
                 viewport={{ once: true }}
               >
                 <div
-                  className={`rounded-2xl border transition-all duration-300 ${
+                  className={`rounded-xl border transition-all duration-300 ${
                     activeIndex === index
                       ? "border-primary/40 shadow-md"
                       : "border-base-200 hover:border-primary/30"
@@ -130,7 +131,7 @@ const FAQ = () => {
           className="mt-24 p-12 rounded-3xl border border-primary/20 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 flex flex-col md:flex-row items-center justify-between gap-8"
         >
           <div className="flex items-center gap-5">
-            <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl">
+            <div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-2xl">
               <FaLifeRing />
             </div>
             <div>
@@ -144,9 +145,12 @@ const FAQ = () => {
             </div>
           </div>
 
-          <button className="btn btn-primary btn-lg rounded-2xl px-10 font-bold shadow-lg shadow-primary/30">
+          <Link
+            to="/contact"
+            className="btn btn-primary btn-lg rounded-xl px-10 font-bold shadow-lg shadow-primary/30"
+          >
             Contact Support
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>
