@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaQuestionCircle, FaLifeRing } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { Link } from "react-router";
 
 const FAQ = () => {
@@ -38,7 +38,7 @@ const FAQ = () => {
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         {/* Header */}
         <div className="text-center mb-20">
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -46,7 +46,7 @@ const FAQ = () => {
           >
             <FaQuestionCircle className="text-sm" />
             Advanced Knowledge Base
-          </motion.div>
+          </Motion.div>
 
           <h2 className="text-4xl md:text-5xl font-black text-base-content tracking-tight mb-6">
             Scholarship Platform <span className="text-primary">FAQs</span>
@@ -84,7 +84,7 @@ const FAQ = () => {
           {!loading &&
             !error &&
             faqs.map((faq, index) => (
-              <motion.div
+              <Motion.div
                 key={faq.id || index}
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -119,12 +119,12 @@ const FAQ = () => {
                     </div>
                   )}
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
         </div>
 
         {/* Support Section */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -151,7 +151,7 @@ const FAQ = () => {
           >
             Contact Support
           </Link>
-        </motion.div>
+        </Motion.div>
       </div>
     </section>
   );

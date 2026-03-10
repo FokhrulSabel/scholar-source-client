@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { FaUserGraduate, FaUniversity, FaGlobe, FaAward } from "react-icons/fa";
 
 const statsData = [
@@ -42,7 +42,7 @@ const Statistics = () => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-24">
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -51,7 +51,7 @@ const Statistics = () => {
                        text-[#5a189a] text-xs font-semibold uppercase tracking-widest mb-6"
           >
             Institutional Impact
-          </motion.div>
+          </Motion.div>
 
           <h2 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
             Academic Excellence in{" "}
@@ -72,7 +72,7 @@ const Statistics = () => {
             const Icon = stat.icon;
 
             return (
-              <motion.div
+              <Motion.div
                 key={stat.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -115,7 +115,7 @@ const Statistics = () => {
                                 w-0 h-[3px] bg-gradient-to-r from-[#8b3fd6] to-[#5a189a] 
                                 rounded-full group-hover:w-1/2 transition-all duration-500"
                 />
-              </motion.div>
+              </Motion.div>
             );
           })}
         </div>

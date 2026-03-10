@@ -16,16 +16,15 @@ import { CgProfile } from "react-icons/cg";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import Logo from "../components/ui/Logo/Logo";
 import DashboardStatSkeleton from "../components/ui/skeleton/DashboardStatSkeleton";
-// import Loader from "../components/Loader/Loader";
 
 const DashBoardLayout = () => {
-  const { role, isLoading } = useRole();
-  const { user } = useAuth();
+  const { role } = useRole();
+  const { user, loading } = useAuth();
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="p-8">
-        <DashboardStatSkeleton count={8} />
+        <DashboardStatSkeleton count={16} />
       </div>
     );
   }

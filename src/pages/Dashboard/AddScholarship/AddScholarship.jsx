@@ -61,7 +61,7 @@ const AddScholarship = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-base-100 shadow-xl rounded-3xl p-10 space-y-12"
       >
-        {/* ================= Scholarship Info ================= */}
+        {/* Scholarship Info */}
         <section>
           <h3 className="font-semibold text-xl mb-6">
             Scholarship Information
@@ -78,13 +78,15 @@ const AddScholarship = () => {
 
             <select className={select} {...register("scholarshipCategory")}>
               <option>Full Funded</option>
-              <option>Partial Funded</option>
+              <option>Partially Funded</option>
+              <option>Tuition Waiver</option>
+              <option>Research Grant</option>
               <option>Self Funded</option>
             </select>
           </div>
         </section>
 
-        {/* ================= University ================= */}
+        {/* University */}
         <section>
           <h3 className="font-semibold text-xl mb-6">University Information</h3>
 
@@ -124,7 +126,7 @@ const AddScholarship = () => {
           </div>
         </section>
 
-        {/* ================= Academic ================= */}
+        {/* Academic */}
         <section>
           <h3 className="font-semibold text-xl mb-6">Academic Details</h3>
 
@@ -140,11 +142,18 @@ const AddScholarship = () => {
               <option>Business</option>
               <option>Arts</option>
               <option>Medical</option>
+              <option>General</option>
+              <option>Engineering</option>
+              <option>Agriculture</option>
+              <option>Science</option>
+              <option>Journalism</option>
+              <option>Environment</option>
+              <option>Entrepreneurship</option>
             </select>
           </div>
         </section>
 
-        {/* ================= Financial ================= */}
+        {/* Financial */}
         <section>
           <h3 className="font-semibold text-xl mb-6">Financial Information</h3>
 
@@ -172,7 +181,7 @@ const AddScholarship = () => {
           </div>
         </section>
 
-        {/* ================= Deadline ================= */}
+        {/* Deadline */}
         <section>
           <h3 className="font-semibold text-xl mb-6">Application Deadline</h3>
 

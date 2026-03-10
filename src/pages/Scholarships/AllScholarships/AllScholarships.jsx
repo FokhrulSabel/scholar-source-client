@@ -3,7 +3,7 @@ import ScholarshipCard from "../../../components/ui/ScholarshipCard/ScholarshipC
 import useAxios from "../../../hooks/useAxios";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../../components/Loader/Loader";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa";
 
@@ -52,7 +52,9 @@ const AllScholarships = () => {
         page,
       });
 
-      const res = await axiosInstance.get(`/all-scholarships?${params.toString()}`);
+      const res = await axiosInstance.get(
+        `/all-scholarships?${params.toString()}`,
+      );
       return res.data;
     },
     keepPreviousData: true,
@@ -98,7 +100,6 @@ const AllScholarships = () => {
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
               />
             </div>
-
 
             {/* Degree */}
             <select
@@ -181,7 +182,7 @@ const AllScholarships = () => {
             {/* Scholarships Grid */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {scholarships.map((item, index) => (
-                <motion.div
+                <Motion.div
                   key={item._id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -189,7 +190,7 @@ const AllScholarships = () => {
                   viewport={{ once: true }}
                 >
                   <ScholarshipCard item={item} />
-                </motion.div>
+                </Motion.div>
               ))}
             </div>
 

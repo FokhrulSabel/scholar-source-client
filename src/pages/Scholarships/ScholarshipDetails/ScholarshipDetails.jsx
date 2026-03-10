@@ -10,7 +10,7 @@ import {
   FaMoneyBillWave,
   FaUniversity,
 } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import useAuth from "../../../hooks/useAuth";
 import CardSkeleton from "../../../components/ui/skeleton/CardSkeleton";
 
@@ -80,7 +80,7 @@ const ScholarshipDetails = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-[#d19ef1]/10 via-transparent to-[#5a189a]/10 pointer-events-none"></div>
 
       <div className="max-w-6xl mx-auto space-y-12 relative z-10">
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="relative bg-base-200 rounded-[2.5rem] shadow-xl border border-base-300 overflow-hidden"
@@ -168,7 +168,7 @@ const ScholarshipDetails = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </Motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
@@ -193,7 +193,7 @@ const ScholarshipDetails = () => {
               icon: <FaMoneyBillWave />,
             },
           ].map((item, i) => (
-            <motion.div
+            <Motion.div
               whileHover={{ y: -5 }}
               key={i}
               className="bg-base-200 p-6 rounded-[2rem] shadow-lg border border-base-300 text-center hover:shadow-[#8b3fd6]/20 transition-all duration-300"
@@ -208,7 +208,7 @@ const ScholarshipDetails = () => {
               <p className="text-lg font-black text-base-content truncate">
                 {item.value}
               </p>
-            </motion.div>
+            </Motion.div>
           ))}
         </div>
 
@@ -225,7 +225,7 @@ const ScholarshipDetails = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {reviews.map((review) => (
-              <motion.div
+              <Motion.div
                 key={review._id}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -264,7 +264,7 @@ const ScholarshipDetails = () => {
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
         </div>

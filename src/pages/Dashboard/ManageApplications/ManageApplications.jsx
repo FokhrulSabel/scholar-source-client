@@ -148,7 +148,7 @@ const ManageApplications = () => {
                   {app.paymentStatus}
                 </td>
 
-                <td className="flex flex-col md:flex-row gap-2">
+                <td className="flex flex-col md:flex-col gap-2">
                   {/* DETAILS */}
                   <button
                     className="btn btn-sm  btn-outline btn-info"

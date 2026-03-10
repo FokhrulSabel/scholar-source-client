@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import {
   GraduationCap,
   Globe2,
@@ -16,7 +16,7 @@ const About = () => {
       <section className="relative py-28 px-6 md:px-16 lg:px-32 text-center">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent -z-10" />
 
-        <motion.h1
+        <Motion.h1
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -24,9 +24,9 @@ const About = () => {
         >
           Empowering the Next Generation of{" "}
           <span className="text-primary">Global Scholars</span>
-        </motion.h1>
+        </Motion.h1>
 
-        <motion.p
+        <Motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -36,13 +36,13 @@ const About = () => {
           ScholarSource connects ambitious students with verified, high-impact
           scholarship opportunities worldwide — simplifying discovery,
           application, and success.
-        </motion.p>
+        </Motion.p>
       </section>
 
       
       <section className="px-6 md:px-16 lg:px-32 py-24">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -78,9 +78,9 @@ const About = () => {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </Motion.div>
 
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -92,7 +92,7 @@ const About = () => {
               alt="Students collaborating"
               className="rounded-[2.5rem] shadow-2xl object-cover"
             />
-          </motion.div>
+          </Motion.div>
         </div>
       </section>
 
@@ -126,7 +126,7 @@ const About = () => {
                 desc: "Empowering ambition with real resources.",
               },
             ].map((item, index) => (
-              <motion.div
+              <Motion.div
                 key={index}
                 whileHover={{ y: -8 }}
                 className="bg-base-100 p-10 rounded-3xl border border-base-300 shadow-lg hover:shadow-primary/20 transition-all"
@@ -136,7 +136,7 @@ const About = () => {
                 </div>
                 <h3 className="font-bold text-xl mb-3">{item.title}</h3>
                 <p className="text-sm text-base-content/60">{item.desc}</p>
-              </motion.div>
+              </Motion.div>
             ))}
           </div>
         </div>
@@ -144,7 +144,7 @@ const About = () => {
 
       
       <section className="px-6 md:px-16 lg:px-32 py-24">
-        <motion.div
+        <Motion.div
           whileHover={{ scale: 1.02 }}
           className="relative bg-primary text-white p-16 rounded-[3rem] text-center overflow-hidden shadow-2xl"
         >
@@ -167,7 +167,7 @@ const About = () => {
             Explore Scholarships
             <ArrowRight className="ml-2" />
           </Link>
-        </motion.div>
+        </Motion.div>
       </section>
     </div>
   );

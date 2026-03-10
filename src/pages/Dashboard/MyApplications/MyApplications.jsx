@@ -49,7 +49,7 @@ const MyApplications = () => {
   };
   // Handle Delete
   const handleDelete = async (id) => {
-    const Conferm = await Swal.fire({
+    const Confirm = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
@@ -58,7 +58,7 @@ const MyApplications = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     });
-    if (Conferm.isConfirmed) {
+    if (Confirm.isConfirmed) {
       try {
         const res = await axiosSecure.delete(`/my-applications/${id}`);
         if (res.data.success) {

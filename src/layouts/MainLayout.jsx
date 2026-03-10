@@ -10,7 +10,7 @@ const MainLayout = () => {
     <div className="max-w-screen-2xl mx-auto ">
       <Navbar></Navbar>
       <ScrollToTop behavior="smooth" />
-      <Suspense fallback={<Loader/>}>
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
       <Footer></Footer>

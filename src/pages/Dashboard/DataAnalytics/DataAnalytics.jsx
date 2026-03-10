@@ -1,14 +1,14 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FaUsers, FaGraduationCap, FaDollarSign } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loader from "../../../components/Loader/Loader";
 import UniversityPieChart from "../../../components/UniversityPieChart/UniversityPieChart";
 
 const StatCard = ({ title, subtitle, value, icon: Icon, prefix }) => {
   return (
-    <motion.div
+    <Motion.div
       whileHover={{ y: -6 }}
       className="relative p-8 rounded-3xl bg-base-100 border border-primary/10 hover:border-primary/30 transition-all duration-300"
     >
@@ -34,7 +34,7 @@ const StatCard = ({ title, subtitle, value, icon: Icon, prefix }) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   );
 };
 

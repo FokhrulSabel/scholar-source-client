@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { FaSearch, FaUserPlus, FaFileAlt, FaChartLine } from "react-icons/fa";
 import { Link } from "react-router";
 
@@ -53,7 +53,7 @@ const HowItWorks = () => {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -66,10 +66,10 @@ const HowItWorks = () => {
             A simple and guided process designed to help you secure the right
             scholarship effortlessly.
           </p>
-        </motion.div>
+        </Motion.div>
 
         {/* Steps Grid */}
-        <motion.div
+        <Motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -83,7 +83,7 @@ const HowItWorks = () => {
             const Icon = step.Icon;
 
             return (
-              <motion.div
+              <Motion.div
                 key={step.id}
                 variants={itemVariants}
                 whileHover={{ y: -6 }}
@@ -108,10 +108,10 @@ const HowItWorks = () => {
                 <p className="text-sm text-base-content/60 leading-relaxed max-w-xs mx-auto">
                   {step.desc}
                 </p>
-              </motion.div>
+              </Motion.div>
             );
           })}
-        </motion.div>
+        </Motion.div>
 
         {/* CTA */}
         <div className="mt-20 text-center">

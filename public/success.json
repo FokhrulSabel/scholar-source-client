@@ -25,59 +25,5 @@
     "image": "https://i.ibb.co.com/WpHxJw4C/expert3.jpg",
     "message": "A reliable platform for international students. Accurate scholarship details and a simple interface helped me complete my master's application smoothly.",
     "rating": 4
-  },
-  {
-    "id": 4,
-    "name": "Mahmud Hasan",
-    "university": "University of Manchester",
-    "country": "UK",
-    "image": "https://i.ibb.co.com/B5nFnnq2/expert4.webp",
-    "message": "I found multiple scholarship opportunities that matched my academic background. The step-by-step process made applying easy and stress-free.",
-    "rating": 5
-  },
-  {
-    "id": 5,
-    "name": "Tasnia Karim",
-    "university": "University of Sydney",
-    "country": "Australia",
-    "image": "https://i.ibb.co.com/rRBDpsQm/expert1.jpg",
-    "message": "Clean design, detailed information, and helpful reminders made this platform extremely useful. I highly recommend it to students planning to study abroad.",
-    "rating": 5
-  },
-  {
-    "id": 6,
-    "name": "Rakib Hossain",
-    "university": "Technical University of Munich",
-    "country": "Germany",
-    "image": "https://i.ibb.co.com/0ypkgN2K/expert2.jpg",
-    "message": "Finding engineering scholarships became much easier here. The platform helped me stay organized and track all my applications efficiently.",
-    "rating": 4
-  },
-  {
-    "id": 7,
-    "name": "Sadia Akter",
-    "university": "National University of Singapore",
-    "country": "Singapore",
-    "image": "https://i.ibb.co.com/WpHxJw4C/expert3.jpg",
-    "message": "I loved how simple and modern the platform feels. The scholarship listings were detailed and trustworthy, which helped me make confident decisions.",
-    "rating": 5
-  },
-  {
-    "id": 8,
-    "name": "Fahim Chowdhury",
-    "university": "University of Edinburgh",
-    "country": "UK",
-    "image": "https://i.ibb.co.com/B5nFnnq2/expert4.webp",
-    "message": "This platform saved me countless hours of research. Everything I needed — requirements, deadlines, and coverage — was available in one place.",
-    "rating": 5
-  },
-  {
-    "id": 9,
-    "name": "Jannatul Ferdous",
-    "university": "University of Tokyo",
-    "country": "Japan",
-    "image": "https://i.ibb.co.com/rRBDpsQm/expert1.jpg",
-    "message": "The scholarship application process felt much less intimidating thanks to this platform. Clear instructions and helpful information guided me throughout.",
-    "rating": 4
   }
 ]

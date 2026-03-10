@@ -8,7 +8,7 @@ import {
 } from "react-icons/md";
 import { RiShieldUserFill } from "react-icons/ri";
 import Loader from "../../../components/Loader/Loader";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 
 const DashboardHome = () => {
   const { role } = useRole();
@@ -44,7 +44,7 @@ const DashboardHome = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10">
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -144,7 +144,7 @@ const DashboardHome = () => {
           © {new Date().getFullYear()} Scholarship Management System. All rights
           reserved.
         </div>
-      </motion.div>
+      </Motion.div>
     </div>
   );
 };

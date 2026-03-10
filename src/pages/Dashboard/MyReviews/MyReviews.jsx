@@ -29,7 +29,7 @@ const MyReviews = () => {
 
   // Delete the review
   const handleDelete = async (id) => {
-    const Conferm = await Swal.fire({
+    const Confirm = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
       icon: "warning",
@@ -38,7 +38,7 @@ const MyReviews = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     });
-    if (Conferm.isConfirmed) {
+    if (Confirm.isConfirmed) {
       try {
         const res = await axiosSecure.delete(`/my-reviews/${id}`);
         if (res.data.success) {

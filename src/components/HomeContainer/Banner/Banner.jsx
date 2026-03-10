@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { Search } from "lucide-react";
 import harvard from "../../../assets/harvard.webp";
 import oxford from "../../../assets/oxford.webp";
@@ -57,7 +53,7 @@ const Banner = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden text-white  rounded-3xl p-8">
       <AnimatePresence mode="wait">
-        <motion.div
+        <Motion.div
           key={currentImage}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -69,10 +65,10 @@ const Banner = () => {
           <img
             src={images[currentImage]}
             alt="Campus"
-            loading="lazy"
+            loading="eager"
             className="w-full h-full object-cover"
           />
-        </motion.div>
+        </Motion.div>
       </AnimatePresence>
 
       {/* Academic  Overlay */}
@@ -81,7 +77,7 @@ const Banner = () => {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-6 py-24 grid lg:grid-cols-2 gap-16 items-center relative z-10">
         {/* LEFT SIDE */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -113,15 +109,15 @@ const Banner = () => {
               Learn More
             </Link>
           </div>
-        </motion.div>
+        </Motion.div>
 
         {/* RIGHT SIDE PREMIUM GLASS CARD */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <motion.div
+          <Motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 8, repeat: Infinity }}
             className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl"
@@ -157,8 +153,8 @@ const Banner = () => {
                 <p className="text-gray-300">Deadline: March 2026</p>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       </div>
     </section>
   );
