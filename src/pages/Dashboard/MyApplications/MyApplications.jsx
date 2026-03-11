@@ -151,7 +151,7 @@ const MyApplications = () => {
                 </td>
                 <td>{application.feedback || "No feedback yet"}</td>
 
-                <td className="flex flex-col md:flex-row gap-2 ">
+                <td className="flex flex-col md:flex-col gap-2 ">
                   {/* DETAILS BUTTON */}
                   <button
                     className="btn btn-sm btn-info"

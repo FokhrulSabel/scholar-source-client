@@ -14,6 +14,7 @@ import PrivacyPolicy from "../components/Footer/PrivacyPolicy";
 import TermsOfService from "../components/Footer/TermsOfService";
 import Contact from "../components/Footer/Contact";
 import Blogs from "../components/HomeContainer/Blogs/Blogs";
+// import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 
 const Home = lazy(() => import("../pages/Home/Home"));
 const AllScholarships = lazy(
